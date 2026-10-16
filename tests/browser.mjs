@@ -1,4 +1,4 @@
-import { chromium } from '@playwright/test';
+import { chromium, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { once } from 'node:events';
 import assert from 'node:assert/strict';
@@ -21,7 +21,7 @@ try {
   assert.equal(await page.getByRole('button', { name: /Monday, October 19 · 09:00/ }).isDisabled(), true);
   await page.screenshot({ path: 'evidence/desktop-quotes.png', fullPage: true });
   await page.getByRole('button', { name: /Monday, October 19 · 14:00/ }).click(); await page.getByRole('button', { name: 'Review & confirm' }).click();
-  assert.equal(await page.getByRole('dialog').isVisible(), true); await page.getByRole('button', { name: 'Approve household plan' }).click(); assert.equal(await page.getByRole('dialog').isVisible(), true);
+  await expect(page.getByRole('dialog')).toBeVisible(); await page.getByRole('button', { name: 'Approve household plan' }).click(); await expect(page.getByRole('dialog')).toBeVisible();
   await page.getByLabel('Confirming as').selectOption('Sam'); await page.getByRole('checkbox').check(); await page.getByRole('button', { name: 'Approve household plan' }).click();
   await page.getByText('Approved by Sam.', { exact: false }).waitFor(); await page.reload(); await page.getByText('Approved by Sam.', { exact: false }).waitFor(); checks.push('report → compare → reject unavailable slot → review → explicit Sam approval → reload persistence');
   await page.screenshot({ path: 'evidence/desktop-approved.png', fullPage: true });
