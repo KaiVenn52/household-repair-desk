@@ -6,7 +6,9 @@ The current local revision adds budget-constrained planning, household availabil
 
 The new video is video/v2/household-repair-desk-demo.mp4, approximately 91 seconds, 1080p, with conversational English stock neural narration and single-line outlined subtitles. See video/v2/video-verification.json for exact duration and hash. A discarded encoded sync slate aligns footage and narration; startup time and encoder tail padding are not used to infer sync. The old v0.1 video and public release remain preserved.
 
-See docs/REFINEMENT-REVIEW.md for changes, test evidence, observed issues and remaining product limits. The following completed list and public CI/video entries describe the previous v0.1 release unless explicitly superseded above. No v0.2 public deployment, Alexa device test, qualifying YouTube/Vimeo upload or final event submission is claimed. Registration still requires participant eligibility/rules attestation and prior Amazon development experience; upload still requires a functioning native file selection after the bridge rejection.
+Current source and review artifacts are published at https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.2.0 . Runtime commit ceca6725164409589e7a53e54dc662057ef9522d passed Linux CI: https://github.com/KaiVenn52/household-repair-desk/actions/runs/38916798878 . No v0.2 public application deployment, Alexa device test, qualifying YouTube/Vimeo upload or final event submission is claimed.
+
+See docs/REFINEMENT-REVIEW.md for changes, test evidence, observed issues and remaining product limits. The following completed list and public CI/video entries describe the previous v0.1 release unless explicitly superseded above. Registration still requires participant eligibility/rules attestation and prior Amazon development experience; upload still requires a functioning native file selection after the bridge rejection.
 
 **Implementation, verification, English narrated video and public source release complete. Event registration, a qualifying YouTube/Vimeo upload and final submission remain pending.**
 

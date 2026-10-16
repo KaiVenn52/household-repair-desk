@@ -28,7 +28,7 @@ Required public YouTube/Vimeo URL: pending a successful upload. Do not paste a p
 
 Previous v0.1 review copy: https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.1.0
 
-Current v0.2 video: video/v2/household-repair-desk-demo.mp4 (local; publication status tracked separately).
+Current v0.2 review copy: https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.2.0 . This is not the required YouTube/Vimeo URL.
 
 ## What inspired us
 

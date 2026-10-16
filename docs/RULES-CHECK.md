@@ -10,7 +10,7 @@ Required materials include functional source and setup instructions, a judging-a
 
 Malaysia is not expressly excluded; adulthood, conflicts and other personal eligibility conditions still need participant attestation. No registration is evidenced.
 
-AWS credit requests closed October 7. No AWS or Open Source mini challenge is claimed. No payment, publication or final submission is authorized in this work round.
+AWS credit requests closed October 7. No AWS or Open Source mini challenge is claimed. At the initial rules check, publication and final submission were not authorized. The user's later continuation authorized public project preparation; the GitHub repository and review releases were subsequently published. No payment or final event submission has occurred.
 
 ## Technical references
 

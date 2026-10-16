@@ -57,6 +57,8 @@ Host/Origin validation and a restrictive content policy protect the local demo. 
 
 Public source: https://github.com/KaiVenn52/household-repair-desk
 
+Current v0.2: [91.03-second narrated demo, captions and verified source archive](https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.2.0). Runtime commit ceca672 passed [Linux CI](https://github.com/KaiVenn52/household-repair-desk/actions/runs/38916798878). This release is a review copy; required YouTube/Vimeo hosting and final event submission remain pending.
+
 The previous v0.1 demo is preserved in the [release](https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.1.0). It uses actual app footage and disclosed synthetic narration. This GitHub asset is a preview; the hackathon's required public YouTube/Vimeo URL is a separate prerequisite and is not claimed here.
 
 See `submission/PROJECT.md`, `submission/DEMO-SCRIPT-V2.md`, `submission/UPLOAD-METADATA.md`, `submission/FEEDBACK.md`, `docs/RULES-CHECK.md`, and `STATUS.md`. Event registration and final submission are not yet evidenced. No X post has been published. The original DEMO-SCRIPT.md is preserved as the v0.1 recording plan.

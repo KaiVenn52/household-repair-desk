@@ -34,7 +34,7 @@ Authenticated household roles, current provider quotes, calendar integration and
 
 - Participant identity and eligibility attestation: not collected here.
 - GitHub repository: https://github.com/KaiVenn52/household-repair-desk (public, MIT licensed; no reviewer invitation required for source access).
-- Video: current local v0.2 demo is approximately 91 seconds at 1920×1080 with stock neural narration and subtitles. The existing public GitHub Release contains the previous v0.1 video; required YouTube/Vimeo upload is still pending.
+- Video: current v0.2 demo is 91.03 seconds at 1920×1080 with stock neural narration and subtitles: https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.2.0 . The v0.1 release is preserved; required YouTube/Vimeo upload is still pending.
 - Final Devpost submission: not authorized or performed.
 - Mini challenge: none claimed.
 
