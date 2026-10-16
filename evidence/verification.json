@@ -1,11 +1,12 @@
 {
   "date": "2026-10-16",
   "timezone": "Asia/Kuala_Lumpur",
-  "nodeTests": { "command": "npm.cmd test", "total": 8, "passed": 8, "failed": 0 },
+  "nodeTests": { "command": "npm.cmd test", "total": 9, "passed": 9, "failed": 0 },
   "mcp": { "officialSdk": "1.32.1", "negotiatedProtocol": "2025-11-25", "transport": "Streamable HTTP", "toolCount": 6, "realHttpClient": true },
   "browserReport": "evidence/browser-report.json",
   "visualInspection": ["evidence/desktop-quotes.png", "evidence/desktop-approved.png", "evidence/viewport-375.png"],
-  "evidenceScope": { "local": true, "fixtureSimulation": true, "realAlexaDevice": false, "liveModel": false, "deployment": false, "publication": false, "registration": false, "submission": false },
-  "video": { "scriptExists": true, "recorded": false, "uploaded": false },
+  "evidenceScope": { "local": true, "fixtureSimulation": true, "realAlexaDevice": false, "liveModel": false, "deployment": false, "sourcePublished": true, "registration": false, "submission": false },
+  "ci": { "runtimeCommit": "51f23b68a07d9956c483f39da0a285d17c0c3029", "status": "success", "url": "https://github.com/KaiVenn52/household-repair-desk/actions/runs/38881877583" },
+  "video": { "recorded": true, "durationSeconds": 140.8, "resolution": "1920x1080", "githubReleaseUploaded": true, "youtubeOrVimeoUploaded": false, "url": "https://github.com/KaiVenn52/household-repair-desk/releases/download/v0.1.0/household-repair-desk-demo.mp4" },
   "previewServerLeftRunning": false
 }

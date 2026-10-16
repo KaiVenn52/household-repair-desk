@@ -50,6 +50,6 @@ duration = float(probe['format']['duration'])
 assert duration < 180, duration
 assert any(s['codec_type']=='audio' for s in probe['streams'])
 assert any(s.get('width')==1920 and s.get('height')==1080 for s in probe['streams'])
-result = {'durationSeconds':duration,'resolution':'1920x1080','source':'continuous real app recording','trimmedSetupSeconds':lead,'voice':'Microsoft David Desktop, synthetic English narration','captions':'English burned-in and separate SRT; sentence/word-weight timing','sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'underThreeMinutes':True,'externalBooking':False,'alexaDeviceConnected':False,'videoPublic':False}
+result = {'durationSeconds':duration,'resolution':'1920x1080','source':'continuous real app recording','trimmedSetupSeconds':lead,'voice':'Microsoft David Desktop, synthetic English narration','captions':'English burned-in and separate SRT; sentence/word-weight timing','sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'underThreeMinutes':True,'externalBooking':False,'alexaDeviceConnected':False,'qualifyingYouTubeOrVimeoPublic':False,'githubReviewCopyPublic':False}
 (OUT/'video-verification.json').write_text(json.dumps(result,indent=2),encoding='utf-8')
 print(json.dumps(result,indent=2))
