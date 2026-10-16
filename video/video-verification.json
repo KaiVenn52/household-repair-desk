@@ -1,0 +1,13 @@
+{
+  "durationSeconds": 140.8,
+  "resolution": "1920x1080",
+  "source": "continuous real app recording",
+  "trimmedSetupSeconds": 10.162699800000013,
+  "voice": "Microsoft David Desktop, synthetic English narration",
+  "captions": "English burned-in and separate SRT; sentence/word-weight timing",
+  "sha256": "07a59159dffd13eb428377972dabe189101d3a484f81a2ee7f16db6cbc4dc97d",
+  "underThreeMinutes": true,
+  "externalBooking": false,
+  "alexaDeviceConnected": false,
+  "videoPublic": false
+}

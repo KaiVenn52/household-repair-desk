@@ -33,7 +33,7 @@ Authenticated household roles, current provider quotes, calendar integration and
 ## Fields still required
 
 - Participant identity and eligibility attestation: not collected here.
-- GitHub repository URL and reviewer access: not created/published.
-- Public demo video URL: not recorded/published.
+- GitHub repository: https://github.com/KaiVenn52/household-repair-desk (public, MIT licensed; no reviewer invitation required for source access).
+- Video: actual 140.8-second English demo recorded and rendered at 1920×1080, with subtitles. GitHub Release preview available; required YouTube/Vimeo upload is still pending.
 - Final Devpost submission: not authorized or performed.
 - Mini challenge: none claimed.

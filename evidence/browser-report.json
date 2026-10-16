@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "browser": "Playwright controlling installed Google Chrome; Browser plugin not available",
-  "url": "http://127.0.0.1:57732",
+  "url": "http://127.0.0.1:57571",
   "checks": [
     "report → compare → reject unavailable slot → review → explicit Sam approval → reload persistence",
     "axe WCAG A/AA scan: approved desktop",

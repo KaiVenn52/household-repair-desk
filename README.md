@@ -1,5 +1,7 @@
 # Household Repair Desk
 
+[![Verify repair workflow](https://github.com/KaiVenn52/household-repair-desk/actions/workflows/verify.yml/badge.svg)](https://github.com/KaiVenn52/household-repair-desk/actions/workflows/verify.yml)
+
 Turn a leaking kitchen sink into a household-approved repair plan, with the quote exclusions still visible.
 
 Independent Alexa+ hackathon prototype. The web experience is a guided text simulation, not a live Alexa client or language model. The MCP server is real and uses the official SDK over Streamable HTTP. Quotes, providers, household members and calendars are fictional. Approval creates a local household record; no contractor is contacted and no booking or payment occurs.
@@ -25,7 +27,7 @@ Open http://127.0.0.1:4317. The server binds to loopback only. It does not need 
 - Review provider, price, exclusions and time; choose Alex or Sam, check the confirmation box, and approve.
 - Reload. The household plan and its audit timeline remain. Cancel if desired.
 
-The quotes use USD and the calendar uses Asia/Kuala_Lumpur (UTC+08). Example appointment dates are October 19–20, 2026; they are rejected once past. This is an intentionally bounded leaking-sink fixture, not a universal repair adviser.
+The quotes use USD and the calendar uses Asia/Kuala_Lumpur (UTC+08). Each new task generates dates for the next sample Monday/Tuesday and stores that calendar with the task. An existing task's dates never silently shift, and past appointments are rejected. This keeps new demonstrations usable throughout judging. The recorded October 16 demo shows October 19–20 appointments. This is an intentionally bounded leaking-sink fixture, not a universal repair adviser.
 
 ## MCP client connection
 
@@ -53,4 +55,12 @@ Host/Origin validation and a restrictive content policy protect the local demo. 
 
 ## Submission materials
 
-See `submission/PROJECT.md`, `submission/DEMO-SCRIPT.md`, `submission/FEEDBACK.md`, `docs/RULES-CHECK.md`, and `STATUS.md`. All are local preparation. Registration, an accessible judging repository, a public demo video and final submission have not been completed.
+Public source: https://github.com/KaiVenn52/household-repair-desk
+
+Download the real 140.8-second 1080p demo and English captions from the [release](https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.1.0). It uses actual app footage and disclosed synthetic narration. This GitHub asset is a preview; the hackathon's required public YouTube/Vimeo URL is a separate prerequisite and is not claimed here.
+
+See `submission/PROJECT.md`, `submission/DEMO-SCRIPT.md`, `submission/UPLOAD-METADATA.md`, `submission/FEEDBACK.md`, `docs/RULES-CHECK.md`, and `STATUS.md`. Event registration and final submission are not yet evidenced. No X post has been published.
+
+## Reproduce the video (Windows)
+
+The application itself does not need video tooling. To reproduce this optional recording, install FFmpeg/FFprobe and use an installed en-US Windows voice. Run `scripts/narration-local.ps1` in Windows PowerShell 5.1, `npx.cmd playwright install ffmpeg`, `node scripts/record-demo.mjs`, then `python scripts/render-demo.py`. Narration is generated locally. `scripts/narration.py` is an optional Edge TTS path; that online service returned 403 during this preparation, so it was not used for the delivered voice.

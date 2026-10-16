@@ -40,8 +40,9 @@ run(['ffmpeg','-y','-hide_banner','-loglevel','warning',*inputs,'-filter_complex
 raw = pathlib.Path(recording['source'])
 raw_duration = float(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration','-of','default=nw=1:nk=1',str(raw)], text=True))
 # Page setup before the first scene is the only trim. No interface state is recreated.
-lead = max(0.0, raw_duration - recording['duration'])
-vf = "scale=1440:810,pad=1600:900:80:0:color=0x202820,subtitles=video/demo-en.srt:force_style='FontName=Arial,FontSize=20,PrimaryColour=&H00FFFFFF,OutlineColour=&H00202820,BorderStyle=1,Outline=1,Shadow=0,MarginV=12',scale=1920:1080"
+captured_scene_duration = recording['marks'][-1]['start'] + recording['marks'][-1]['duration']
+lead = max(0.0, raw_duration - captured_scene_duration)
+vf = "scale=1440:810,pad=1600:900:80:0:color=0x202820,subtitles=video/demo-en.srt:force_style='FontName=Arial,FontSize=11,PrimaryColour=&H00FFFFFF,OutlineColour=&H00202820,BorderStyle=1,Outline=1,Shadow=0,MarginV=10',scale=1920:1080"
 target = OUT / 'household-repair-desk-demo.mp4'
 run(['ffmpeg','-y','-hide_banner','-loglevel','warning','-ss',str(lead),'-i',str(raw),'-i',str(OUT/'narration.wav'),'-t',str(offset),'-vf',vf,'-map','0:v:0','-map','1:a:0','-c:v','libx264','-preset','medium','-crf','19','-pix_fmt','yuv420p','-r','30','-c:a','aac','-b:a','160k','-movflags','+faststart',str(target)])
 probe = json.loads(subprocess.check_output(['ffprobe','-v','error','-show_format','-show_streams','-of','json',str(target)],text=True))
@@ -49,6 +50,6 @@ duration = float(probe['format']['duration'])
 assert duration < 180, duration
 assert any(s['codec_type']=='audio' for s in probe['streams'])
 assert any(s.get('width')==1920 and s.get('height')==1080 for s in probe['streams'])
-result = {'durationSeconds':duration,'resolution':'1920x1080','source':'continuous real app recording','voice':'Microsoft David Desktop, synthetic English narration','captions':'English burned-in and separate SRT; sentence/word-weight timing','sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'underThreeMinutes':True,'externalBooking':False,'alexaDeviceConnected':False,'videoPublic':False}
+result = {'durationSeconds':duration,'resolution':'1920x1080','source':'continuous real app recording','trimmedSetupSeconds':lead,'voice':'Microsoft David Desktop, synthetic English narration','captions':'English burned-in and separate SRT; sentence/word-weight timing','sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'underThreeMinutes':True,'externalBooking':False,'alexaDeviceConnected':False,'videoPublic':False}
 (OUT/'video-verification.json').write_text(json.dumps(result,indent=2),encoding='utf-8')
 print(json.dumps(result,indent=2))

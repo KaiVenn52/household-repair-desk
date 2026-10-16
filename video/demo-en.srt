@@ -1,0 +1,144 @@
+1
+00:00:00,000 --> 00:00:04,852
+A leaking sink should not become a week of household admin.
+
+2
+00:00:04,852 --> 00:00:10,146
+Household Repair Desk keeps the report, quote tradeoffs, and
+family decision together.
+
+3
+00:00:10,146 --> 00:00:13,675
+This is a local Alexa Plus experience simulation.
+
+4
+00:00:13,675 --> 00:00:16,321
+The providers and calendars are fictional.
+
+5
+00:00:17,121 --> 00:00:19,645
+Alex reports a leaking kitchen sink.
+
+6
+00:00:19,645 --> 00:00:25,112
+The repair becomes a saved task, rather than another message
+somebody has to
+
+7
+00:00:25,112 --> 00:00:25,533
+remember.
+
+8
+00:00:25,533 --> 00:00:30,159
+The prototype deliberately handles this one repair all the way
+through.
+
+9
+00:00:30,959 --> 00:00:33,468
+Here are the two sample quotes.
+
+10
+00:00:33,468 --> 00:00:37,649
+Clear Pipe is one hundred and thirty dollars before parts.
+
+11
+00:00:37,649 --> 00:00:42,667
+Homekind is one hundred and forty five dollars including the
+standard seal.
+
+12
+00:00:42,667 --> 00:00:48,103
+That fifteen dollar difference buys a more certain scope, and a
+longer warranty.
+
+13
+00:00:48,103 --> 00:00:51,030
+We never invent the missing parts price.
+
+14
+00:00:51,830 --> 00:00:55,263
+The source quote is one click away.
+
+15
+00:00:55,263 --> 00:01:01,150
+It states the callout, labor, unknown parts cost, warranty, and
+sample availability.
+
+16
+00:01:01,150 --> 00:01:07,037
+These are fictional documents included with the project, not live
+contractor offers.
+
+17
+00:01:07,837 --> 00:01:09,679
+Now choose a time.
+
+18
+00:01:09,679 --> 00:01:13,363
+Monday morning is blocked because nobody is home.
+
+19
+00:01:13,363 --> 00:01:17,048
+Monday afternoon works for Homekind and for Sam.
+
+20
+00:01:17,048 --> 00:01:19,811
+Choosing it creates a review request.
+
+21
+00:01:19,811 --> 00:01:22,574
+It does not contact a contractor.
+
+22
+00:01:23,374 --> 00:01:27,906
+Sam reviews the provider, exact time, price, and scope.
+
+23
+00:01:27,906 --> 00:01:33,948
+The request expires, and confirmation requires a current proposal
+and explicit consent.
+
+24
+00:01:33,948 --> 00:01:36,969
+The assistant has no approval tool.
+
+25
+00:01:36,969 --> 00:01:41,500
+Only this separate review step records the household decision.
+
+26
+00:01:42,300 --> 00:01:45,403
+The plan is approved and saved locally.
+
+27
+00:01:45,403 --> 00:01:48,506
+Reloading keeps the task and its timeline.
+
+28
+00:01:48,506 --> 00:01:54,268
+Approved means the household agreed, not that a contractor is
+booked or paid.
+
+29
+00:01:54,268 --> 00:01:59,587
+A cancellation is also recorded, without pretending to cancel an
+external appointment.
+
+30
+00:02:00,387 --> 00:02:06,922
+Behind this simulation is a real MCP service using the official
+SDK and
+
+31
+00:02:06,922 --> 00:02:07,928
+Streamable HTTP.
+
+32
+00:02:07,928 --> 00:02:13,960
+Tests exercise its tools over HTTP, plus persistence, conflicts,
+and expired approvals.
+
+33
+00:02:13,960 --> 00:02:19,993
+One repair, visible tradeoffs, and a clear boundary between
+planning and acting.

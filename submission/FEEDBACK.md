@@ -10,6 +10,7 @@ Local development notes only. These are not feedback on an actual Alexa device o
 - Node.js built-ins: local storage, task IDs and test runner.
 - Playwright and axe-core: rendered workflow and automated accessibility verification.
 - Codex: implementation assistance. The app does not call Codex or another model at runtime.
+- Microsoft System.Speech / Microsoft David Desktop: offline English narration for the actual product recording. FFmpeg/FFprobe: audio normalization, captions, encoding and media verification. These are preparation tools, not app runtime integrations.
 
 ## What worked well
 
@@ -35,3 +36,10 @@ Yes for the official MCP SDK and local web stack: they make the bounded workflow
 | Install runtime packages in restricted shell | Dependencies / DNS ENOTFOUND | Moderate, local environment | Authorized network-enabled install | Document network requirements; do not blame the SDK. |
 
 Do not report hypothetical Alexa latency, device reliability, preview errors or user adoption. Add further friction only after reproducing it, with exact versions and evidence.
+
+## Additional observed preparation issues
+
+- Linux CI exposed a race in the test harness: checking dialog visibility immediately after the trigger click sometimes ran before the asynchronous review request finished. Using Playwright's waiting visibility assertion fixed the test. The actual app continued showing its pending state until the request completed.
+- Fixed-date samples would expire before the judging period. New tasks now generate next-week example slots and preserve their calendar snapshot; a regression test covers the November judging date without changing older tasks.
+- Online Edge TTS returned HTTP 403. The delivered narration uses the installed Windows voice offline instead.
+- The connected Chrome Browser Bridge refused the YouTube file-selection operation (`Not allowed`). The standard uploader and account were accessible, but no successful media attachment or public YouTube video is claimed. This is a preparation/tool-access issue, not an Alexa SDK failure.

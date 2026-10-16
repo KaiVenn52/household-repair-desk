@@ -11,3 +11,4 @@ video/audio/
 video/*.wav
 video/*.mp4
 video/recording.json
+.local-browser/

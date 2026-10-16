@@ -47,6 +47,14 @@ test('persistent state survives process recreation', () => {
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 test('past fixture times and unknown IDs fail explicitly', () => {
-  const d = new RepairDesk(null, () => new Date('2026-10-25T00:00:00Z')); const t = ready(d);
+  let now = clock(); const d = new RepairDesk(null, () => now); const t = ready(d); now = new Date('2026-10-25T00:00:00Z');
   assert.throws(() => propose(d, t), { code: 'PAST_SLOT' }); assert.throws(() => d.get('missing'), { code: 'NOT_FOUND' });
+});
+test('new demos remain usable during judging while saved calendars stay fixed', () => {
+  let now = clock(); const d = new RepairDesk(null, () => now), oldTask = ready(d);
+  assert.equal(oldTask.calendar[1].start, '2026-10-19T14:00:00+08:00');
+  now = new Date('2026-11-20T04:00:00Z');
+  const freshTask = ready(d); assert.equal(freshTask.calendar[1].start, '2026-11-23T14:00:00+08:00');
+  assert.equal(propose(d, freshTask).status, 'awaiting_approval');
+  assert.equal(d.get(oldTask.id).calendar[1].start, '2026-10-19T14:00:00+08:00');
 });

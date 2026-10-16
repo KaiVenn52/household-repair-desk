@@ -9,16 +9,31 @@ export const quotes = [
   { id: 'q-clear', provider: 'Clear Pipe (fictional)', source: 'fixtures/quotes/clear-pipe.txt', currency: 'USD', callout: 35, labor: 95, total: 130, partsIncluded: false, warrantyDays: 14, scope: 'Replace the kitchen sink trap seal. Parts cost is additional and unknown.' },
   { id: 'q-home', provider: 'Homekind Plumbing (fictional)', source: 'fixtures/quotes/homekind.txt', currency: 'USD', callout: 0, labor: 145, total: 145, partsIncluded: true, warrantyDays: 60, scope: 'Replace the kitchen sink trap seal; standard seal and labor included. Additional faults need a new quote.' }
 ];
-export const slots = [
+const legacySlots = [
   { id: 'mon-am', label: 'Monday, October 19 · 09:00–10:00', start: '2026-10-19T09:00:00+08:00', end: '2026-10-19T10:00:00+08:00', householdAvailable: false, reason: 'Alex and Sam are both away.', providers: ['q-clear', 'q-home'] },
   { id: 'mon-pm', label: 'Monday, October 19 · 14:00–15:00', start: '2026-10-19T14:00:00+08:00', end: '2026-10-19T15:00:00+08:00', householdAvailable: true, reason: 'Sam is home; Alex has agreed to Sam supervising.', providers: ['q-home'] },
   { id: 'tue-am', label: 'Tuesday, October 20 · 10:00–11:00', start: '2026-10-20T10:00:00+08:00', end: '2026-10-20T11:00:00+08:00', householdAvailable: true, reason: 'Alex is home.', providers: ['q-clear', 'q-home'] }
 ];
+export function createSlots(now) {
+  // Use the next Monday in UTC+08 and freeze these dates on each task. This
+  // keeps fresh demos usable during judging without shifting an existing plan.
+  const monday = new Date(now.getTime() + 8 * 60 * 60_000);
+  monday.setUTCHours(0, 0, 0, 0);
+  monday.setUTCDate(monday.getUTCDate() + ((1 - monday.getUTCDay() + 7) % 7 || 7));
+  const tuesday = new Date(monday.getTime() + 24 * 60 * 60_000);
+  const dates = [monday, monday, tuesday];
+  return legacySlots.map((slot, index) => {
+    const date = dates[index].toISOString().slice(0, 10);
+    const day = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', weekday: 'long', month: 'long', day: 'numeric' }).format(dates[index]);
+    return { ...structuredClone(slot), label: `${day} · ${slot.start.slice(11,16)}–${slot.end.slice(11,16)}`, start: `${date}${slot.start.slice(10)}`, end: `${date}${slot.end.slice(10)}` };
+  });
+}
 const fail = (code, message, status) => { throw new DeskError(code, message, status); };
 export class RepairDesk {
   constructor(file, clock = () => new Date()) {
     this.file = file; this.clock = clock;
     this.tasks = file && existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : [];
+    for (const task of this.tasks) task.calendar ??= structuredClone(legacySlots);
   }
   save() {
     if (!this.file) return;
@@ -37,7 +52,7 @@ export class RepairDesk {
     // Only this fixture-backed repair is supported; do not apply plumbing prices to arbitrary problems.
     if (!/kitchen\s+sink/i.test(description) || !/leak|drip/i.test(description)) fail('UNSUPPORTED_REPAIR', 'This demo supports a leaking kitchen sink. Other repairs need their own quotes.', 400);
     if (/gas|fire|smoke|electric|shock|flood|sewage/i.test(description)) fail('URGENT_REPAIR', 'This demo cannot handle hazards. Stop this workflow and seek qualified local help.', 400);
-    const task = { id: randomUUID(), description: description.trim(), member, status: 'reported', version: 0, proposal: null, events: [] };
+    const task = { id: randomUUID(), description: description.trim(), member, status: 'reported', version: 0, proposal: null, calendar: createSlots(this.clock()), events: [] };
     this.event(task, 'reported', `${member} reported: ${task.description}`);
     this.tasks.push(task); this.save(); return this.publicTask(task);
   }
@@ -45,16 +60,16 @@ export class RepairDesk {
     const task = this.task(taskId);
     if (!['reported', 'compared'].includes(task.status)) fail('INVALID_STATE', 'Compare quotes before proposing a time. Cancel the proposal first to change it.');
     if (task.status !== 'compared') { task.status = 'compared'; this.event(task, 'quotes_compared', 'Compared two fictional quotes against their source documents.'); this.save(); }
-    return { task: this.publicTask(task), quotes, slots, recommendation: 'Homekind is $15 more upfront, includes the standard seal, and offers 60 rather than 14 warranty days. Clear Pipe is $130 before parts, so its final cost is unknown. No claim that Homekind is always cheaper.', evidence: quotes.map(q => q.source), timezone: 'Asia/Kuala_Lumpur', simulated: true };
+    return { task: this.publicTask(task), quotes, slots: task.calendar, recommendation: 'Homekind is $15 more upfront, includes the standard seal, and offers 60 rather than 14 warranty days. Clear Pipe is $130 before parts, so its final cost is unknown. No claim that Homekind is always cheaper.', evidence: quotes.map(q => q.source), timezone: 'Asia/Kuala_Lumpur', simulated: true };
   }
   propose({ taskId, quoteId, slotId, version }) {
     const task = this.task(taskId);
     if (task.version !== version) fail('STALE_TASK', 'The task changed. Refresh it before proposing a time.');
     if (task.status !== 'compared') fail('INVALID_STATE', 'Compare both quotes before proposing a time.');
     const quote = quotes.find(q => q.id === quoteId) ?? fail('INVALID_QUOTE', 'Select one of the two source-backed quotes.', 400);
-    const slot = slots.find(s => s.id === slotId) ?? fail('INVALID_SLOT', 'Choose a listed time.', 400);
+    const slot = task.calendar.find(s => s.id === slotId) ?? fail('INVALID_SLOT', 'Choose a listed time.', 400);
     if (!slot.householdAvailable || !slot.providers.includes(quoteId)) fail('UNAVAILABLE_SLOT', 'That time does not work for both the household and this provider.');
-    if (new Date(slot.start) <= this.clock()) fail('PAST_SLOT', 'This fixture appointment is in the past; update the demo fixtures.');
+    if (new Date(slot.start) <= this.clock()) fail('PAST_SLOT', 'This sample appointment is in the past. Open a new repair task for fresh sample dates.');
     task.status = 'awaiting_approval';
     task.proposal = { id: randomUUID(), quoteId, slotId, amount: quote.total, currency: quote.currency, partsIncluded: quote.partsIncluded, token: randomUUID(), expiresAt: new Date(this.clock().getTime() + 15 * 60_000).toISOString() };
     this.event(task, 'approval_requested', `${quote.provider}; ${slot.label}; USD ${quote.total}${quote.partsIncluded ? ' including standard seal' : ' plus unknown parts'}. No provider contacted.`);

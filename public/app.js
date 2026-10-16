@@ -23,7 +23,7 @@ function render() {
     content += `<div class="quotes">${data.quotes.map(q => `<article class="quote ${q.partsIncluded ? 'recommended' : ''}"><span class="small">${q.partsIncluded ? 'MORE CERTAIN SCOPE' : 'LOWER SUBTOTAL'}</span><h3>${escape(q.provider)}</h3><div class="price">$${q.total}</div><p>USD · ${q.partsIncluded ? 'standard seal included' : 'plus unknown parts cost'}<br>${q.warrantyDays}-day warranty</p><a href="/${q.source}" target="_blank" rel="noopener">Read source quote ↗</a><button class="secondary" data-quote="${q.id}">Choose ${q.id === 'q-home' ? 'Homekind' : 'Clear Pipe'}</button></article>`).join('')}</div><p class="recommendation">Homekind costs $15 more upfront, includes the standard seal, and offers 46 more warranty days. Clear Pipe's final price depends on parts. A lower subtotal isn't a lower final bill.</p><div id="slots"></div>`;
   }
   if (t.proposal) {
-    const q = data.quotes.find(q => q.id === t.proposal.quoteId), s = data.slots.find(s => s.id === t.proposal.slotId);
+    const q = data.quotes.find(q => q.id === t.proposal.quoteId), s = (t.calendar ?? data.slots).find(s => s.id === t.proposal.slotId);
     content += `<div class="notice"><strong>${escape(q.provider)}</strong><br>${escape(s.label)}<br>USD $${q.total} ${q.partsIncluded ? 'including standard seal' : '+ unknown parts'}<br>${t.status === 'approved' ? `Approved by ${escape(t.proposal.approvedBy)}. Saved locally; no contractor booking or payment.` : t.status === 'cancelled' ? 'Cancelled locally. No provider was contacted.' : 'Waiting for household review. No provider contacted.'}</div>`;
     if (t.status === 'awaiting_approval') content += '<div class="task-actions"><button data-action="review">Review & confirm</button></div>';
   }
@@ -39,7 +39,9 @@ $('#task').addEventListener('click', event => {
   const t = data.tasks.find(t => t.id === activeId);
   if (button.dataset.quote) {
     const quoteId = button.dataset.quote;
-    $('#slots').innerHTML = `<h3>When is someone home?</h3><p class="footnote">Sample household and provider calendars · October 2026 · UTC+08</p>${data.slots.map(s => { const available = s.householdAvailable && s.providers.includes(quoteId); return `<button class="slot" data-slot="${s.id}" data-provider="${quoteId}" ${available ? '' : 'disabled'}>${escape(s.label)}<span>${escape(available ? s.reason : !s.householdAvailable ? s.reason : 'Provider unavailable at this time.')}</span></button>`; }).join('')}`;
+    const calendar = t.calendar ?? data.slots;
+    const month = new Date(calendar[0].start).toLocaleDateString('en-US', { timeZone: 'Asia/Kuala_Lumpur', month: 'long', year: 'numeric' });
+    $('#slots').innerHTML = `<h3>When is someone home?</h3><p class="footnote">Sample household and provider calendars · ${escape(month)} · UTC+08</p>${calendar.map(s => { const available = s.householdAvailable && s.providers.includes(quoteId); return `<button class="slot" data-slot="${s.id}" data-provider="${quoteId}" ${available ? '' : 'disabled'}>${escape(s.label)}<span>${escape(available ? s.reason : !s.householdAvailable ? s.reason : 'Provider unavailable at this time.')}</span></button>`; }).join('')}`;
     return;
   }
   action(async () => {
@@ -47,7 +49,7 @@ $('#task').addEventListener('click', event => {
     if (button.dataset.slot) { await api('propose', { taskId: t.id, version: t.version, quoteId: button.dataset.provider, slotId: button.dataset.slot }); message('That time works with the sample calendars. Review the exact provider, scope, and cost before confirming. Nothing has been booked.'); await load(); }
     if (button.dataset.action === 'cancel') { await api('cancel', { taskId: t.id, version: t.version }); message('Cancelled locally. No booking or payment took place.'); await load(); }
     if (button.dataset.action === 'review') {
-      review = await api(`review/${t.id}`); const q = data.quotes.find(q => q.id === t.proposal.quoteId), s = data.slots.find(s => s.id === t.proposal.slotId);
+      review = await api(`review/${t.id}`); const q = data.quotes.find(q => q.id === t.proposal.quoteId), s = (t.calendar ?? data.slots).find(s => s.id === t.proposal.slotId);
       $('#review-details').innerHTML = `<strong>${escape(q.provider)}</strong><br>${escape(s.label)} · UTC+08<br>USD $${q.total} ${q.partsIncluded ? 'including standard seal' : '+ unknown parts cost'}<br>${q.warrantyDays}-day warranty<br><small>Review expires ${new Date(t.proposal.expiresAt).toLocaleTimeString('en-GB',{timeZone:'Asia/Kuala_Lumpur'})}. Demo identities have no authentication.</small>`;
       $('#confirm').checked = false; $('#review-error').textContent = ''; $('#review').showModal();
     }

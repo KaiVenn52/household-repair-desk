@@ -2,7 +2,7 @@ import express from 'express';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
-import { RepairDesk, quotes, slots } from './domain.js';
+import { RepairDesk, quotes, createSlots } from './domain.js';
 import { createMcpServer } from './mcp.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -18,7 +18,7 @@ export function createApp({ dataFile = resolve(root, 'data/tasks.json'), clock }
   });
   app.use(express.json({ limit: '16kb' }));
   app.get('/api/health', (req, res) => res.json({ ok: true, mode: 'local-fixture-simulation', mcp: '2025-11-25', externalBooking: false, modelConnected: false }));
-  app.get('/api/desk', (req, res) => res.json({ tasks: desk.list(), quotes, slots, timezone: 'Asia/Kuala_Lumpur' }));
+  app.get('/api/desk', (req, res) => res.json({ tasks: desk.list(), quotes, slots: createSlots(desk.clock()), timezone: 'Asia/Kuala_Lumpur' }));
   app.post('/api/report', (req, res) => res.json(desk.report(req.body)));
   app.post('/api/compare', (req, res) => res.json(desk.compare(req.body)));
   app.post('/api/propose', (req, res) => res.json(desk.propose(req.body)));
