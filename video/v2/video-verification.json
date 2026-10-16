@@ -1,0 +1,12 @@
+{
+  "durationSeconds": 91.033333,
+  "resolution": "1920x1080",
+  "source": "continuous real app recording; fixture household; actual HTTP MCP calls",
+  "trimmedSetupSeconds": 0.96,
+  "voice": "Kokoro af_heart, stock synthetic voice, local inference; no voice cloning",
+  "captions": "single-line English; word-weighted timing; separate SRT",
+  "sha256": "4bd0a630709f7850e05a60588d1fbde43851b381a206e4e0a6da13695b473091",
+  "underThreeMinutes": true,
+  "alexaDeviceConnected": false,
+  "qualifyingYouTubeOrVimeoPublic": false
+}

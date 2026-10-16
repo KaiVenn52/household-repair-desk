@@ -1,0 +1,66 @@
+[
+  {
+    "id": "trap",
+    "narration": "That hundred-and-thirty-dollar quote looks cheaper. But it leaves out the part we actually need. Until someone prices the seal, we don't know the bill.",
+    "audioDuration": 8.807333333333334,
+    "duration": 9.457333333333334,
+    "audioFile": "video/v2/audio/trap.wav",
+    "voice": "Kokoro af_heart, stock synthetic English voice, local inference"
+  },
+  {
+    "id": "source",
+    "narration": "You can open the quote and check that yourself. The other one is a hundred and forty-five dollars, with the standard seal included.",
+    "audioDuration": 7.552666666666667,
+    "duration": 8.202666666666667,
+    "audioFile": "video/v2/audio/source.wav",
+    "voice": "Kokoro af_heart, stock synthetic English voice, local inference"
+  },
+  {
+    "id": "budget",
+    "narration": "Say our limit is a hundred and forty dollars. The assistant stops here. It doesn't call an unknown bill affordable. I'll change that limit to a hundred and fifty, explicitly.",
+    "audioDuration": 11.037333333333333,
+    "duration": 12,
+    "audioFile": "video/v2/audio/budget.wav",
+    "voice": "Kokoro af_heart, stock synthetic English voice, local inference"
+  },
+  {
+    "id": "plan",
+    "narration": "Homekind, Monday afternoon, with Sam at home. The app checked the scope and both calendars. Sam reviews the details and approves. So far, a perfectly ordinary plan.",
+    "audioDuration": 11.676625,
+    "duration": 12.326625,
+    "audioFile": "video/v2/audio/plan.wav",
+    "voice": "Kokoro af_heart, stock synthetic English voice, local inference"
+  },
+  {
+    "id": "change",
+    "narration": "Then Sam's schedule changes. This is the bit I care about. That Monday plan is withdrawn immediately. A yes for an old plan must never become a yes for a different one.",
+    "audioDuration": 10.866666666666667,
+    "duration": 11.516666666666667,
+    "audioFile": "video/v2/audio/change.wav",
+    "voice": "Kokoro af_heart, stock synthetic English voice, local inference"
+  },
+  {
+    "id": "replan",
+    "narration": "Find another time. Tuesday works for Alex, and the price is still a hundred and forty-five dollars. Same repair, same budget. A new plan, with a new approval request.",
+    "audioDuration": 11.184625,
+    "duration": 11.834625,
+    "audioFile": "video/v2/audio/replan.wav",
+    "voice": "Kokoro af_heart, stock synthetic English voice, local inference"
+  },
+  {
+    "id": "consent",
+    "narration": "Alex checks the details and confirms. Reload the page: the decision and the change history are still here. Nobody has contacted a contractor or charged a card.",
+    "audioDuration": 10.417333333333334,
+    "duration": 11.067333333333334,
+    "audioFile": "video/v2/audio/consent.wav",
+    "voice": "Kokoro af_heart, stock synthetic English voice, local inference"
+  },
+  {
+    "id": "proof",
+    "narration": "This is a working MCP service, with planning and calendar changes called over real HTTP from the web app. The household and quotes are simulated. When life changes, yesterday's permission isn't enough.",
+    "audioDuration": 13.907333333333334,
+    "duration": 14.557333333333334,
+    "audioFile": "video/v2/audio/proof.wav",
+    "voice": "Kokoro af_heart, stock synthetic English voice, local inference"
+  }
+]

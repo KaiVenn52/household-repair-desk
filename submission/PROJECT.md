@@ -1,6 +1,6 @@
 # Household Repair Desk
 
-**Tagline:** A leak. Two quotes. One less loose end.
+**Tagline:** Plans change. Your approval should, too.
 
 **Track:** Alexa+ — local MCP server with a clearly labeled web experience simulation.
 
@@ -16,7 +16,7 @@ The $130 quote excludes parts; the $145 quote includes a standard seal. The app 
 
 ## How it works
 
-A Node.js server exposes six tools through the official Model Context Protocol SDK using Streamable HTTP. A persistent domain layer enforces legal state transitions, version checks and expiring reviews. The browser uses the same domain layer through local HTTP routes. It is a deterministic guided simulation; it does not pretend to be a connected Alexa device or LLM. MCP tools can prepare or cancel a plan, while approval is a separate browser review operation.
+A Node.js server exposes eight tools through the official Model Context Protocol SDK using Streamable HTTP. A persistent domain layer enforces legal state transitions, version checks and expiring reviews. The browser invokes planning and availability tools through the official MCP client over actual local Streamable HTTP; other routes share the same domain layer. It is a deterministic guided simulation; it does not pretend to be a connected Alexa device or LLM. MCP tools can prepare or cancel a plan, while approval is a separate browser review operation.
 
 No booking, payment or contractor message is made. The product says “household plan approved,” not “contractor booked.” This separation is the central design decision: coordination can advance while authority to act remains visible.
 
@@ -34,6 +34,12 @@ Authenticated household roles, current provider quotes, calendar integration and
 
 - Participant identity and eligibility attestation: not collected here.
 - GitHub repository: https://github.com/KaiVenn52/household-repair-desk (public, MIT licensed; no reviewer invitation required for source access).
-- Video: actual 140.8-second English demo recorded and rendered at 1920×1080, with subtitles. GitHub Release preview available; required YouTube/Vimeo upload is still pending.
+- Video: current local v0.2 demo is approximately 91 seconds at 1920×1080 with stock neural narration and subtitles. The existing public GitHub Release contains the previous v0.1 video; required YouTube/Vimeo upload is still pending.
 - Final Devpost submission: not authorized or performed.
 - Mini challenge: none claimed.
+
+## v0.2: when the household changes its mind
+
+Set a $140 cap: neither quote is eligible, because the $130 subtotal excludes parts and the complete quote is $145. Explicitly change the cap to $150. The planner selects Homekind on Monday with Sam at home. Approve as Sam, then select "Sam can't cover Monday." The old proposal and approval are withdrawn. Find another time: Tuesday with Alex. A new proposal requires a fresh review and approval. Reload to see the saved decision and history.
+
+The browser performs planning and availability changes via the real official SDK MCP client over HTTP. Eight tools are exposed; 14 domain/MCP tests and a full browser replan flow cover the changed behavior. Demo roles remain fictional and unauthenticated. No contractor is contacted. See docs/REFINEMENT-REVIEW.md and video/v2/video-verification.json for the refinement and recording evidence.

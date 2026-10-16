@@ -39,6 +39,10 @@ Do not report hypothetical Alexa latency, device reliability, preview errors or 
 
 ## Additional observed preparation issues
 
+- v0.2: browser planning and availability invoke the official MCP client over actual Streamable HTTP. Completed tool receipts are available from local /api/mcp-activity; runtimeModelConnected remains false.
+- v0.2: replaced Windows David narration with local Kokoro af_heart stock neural speech. No clone or paid API is used. Unicode Windows paths required an ASCII subst drive for the native phonemizer. This is a preparation compatibility issue, not an Alexa defect.
+- v0.2: encoder tail padding made total-duration-based trimming inaccurate. A discarded visual slate now locates the start in encoded frames for synchronization checks.
+
 - Linux CI exposed a race in the test harness: checking dialog visibility immediately after the trigger click sometimes ran before the asynchronous review request finished. Using Playwright's waiting visibility assertion fixed the test. The actual app continued showing its pending state until the request completed.
 - Fixed-date samples would expire before the judging period. New tasks now generate next-week example slots and preserve their calendar snapshot; a regression test covers the November judging date without changing older tasks.
 - Online Edge TTS returned HTTP 403. The delivered narration uses the installed Windows voice offline instead.

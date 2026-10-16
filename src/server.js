@@ -4,10 +4,13 @@ import { fileURLToPath } from 'node:url';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { RepairDesk, quotes, createSlots } from './domain.js';
 import { createMcpServer } from './mcp.js';
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export function createApp({ dataFile = resolve(root, 'data/tasks.json'), clock } = {}) {
   const desk = new RepairDesk(dataFile, clock); const app = express();
+  const mcpActivity = [];
   app.disable('x-powered-by');
   app.use((req, res, next) => {
     const host = req.headers.host;
@@ -19,12 +22,31 @@ export function createApp({ dataFile = resolve(root, 'data/tasks.json'), clock }
   app.use(express.json({ limit: '16kb' }));
   app.get('/api/health', (req, res) => res.json({ ok: true, mode: 'local-fixture-simulation', mcp: '2025-11-25', externalBooking: false, modelConnected: false }));
   app.get('/api/desk', (req, res) => res.json({ tasks: desk.list(), quotes, slots: createSlots(desk.clock()), timezone: 'Asia/Kuala_Lumpur' }));
+  app.get('/api/mcp-activity', (req, res) => res.json({ mode: 'local fictional household', calls: mcpActivity, runtimeModelConnected: false }));
   app.post('/api/report', (req, res) => res.json(desk.report(req.body)));
   app.post('/api/compare', (req, res) => res.json(desk.compare(req.body)));
   app.post('/api/propose', (req, res) => res.json(desk.propose(req.body)));
   app.get('/api/review/:id', (req, res) => res.json(desk.review(req.params.id)));
   app.post('/api/approve', (req, res) => res.json(desk.approve(req.body)));
   app.post('/api/cancel', (req, res) => res.json(desk.cancel(req.body)));
+  // The visible planning/replanning flow invokes the real MCP endpoint. The
+  // target is derived from the local socket, never from user-supplied URLs.
+  async function invokeMcp(req, res, name) {
+    const client = new Client({ name: 'household-web-experience', version: '0.2.0' });
+    try {
+      await client.connect(new StreamableHTTPClientTransport(new URL(`http://127.0.0.1:${req.socket.localPort}/mcp`)));
+      const result = await client.callTool({ name, arguments: req.body });
+      mcpActivity.push({ tool: name, protocol: '2025-11-25', transport: 'Streamable HTTP', outcome: result.isError ? 'rejected' : 'completed', at: new Date().toISOString() });
+      if (mcpActivity.length > 50) mcpActivity.shift();
+      if (result.isError) {
+        const detail = JSON.parse(result.content.find(c => c.type === 'text').text);
+        return res.status(409).json(detail);
+      }
+      res.json({ ...result.structuredContent, toolReceipt: { name, protocol: '2025-11-25', transport: 'Streamable HTTP', executed: true } });
+    } finally { await client.close(); }
+  }
+  app.post('/api/plan', async (req, res) => invokeMcp(req, res, 'plan_repair'));
+  app.post('/api/availability', async (req, res) => invokeMcp(req, res, 'update_household_availability'));
   app.post('/mcp', async (req, res, next) => {
     const protocol = req.headers['mcp-protocol-version'];
     if (protocol && protocol !== '2025-11-25') return res.status(400).json({ error: 'Use MCP 2025-11-25.' });

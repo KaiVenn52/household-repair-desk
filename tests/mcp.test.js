@@ -13,7 +13,7 @@ test('official SDK client negotiates 2025-11-25 and executes real HTTP tools', a
   const transport = new StreamableHTTPClientTransport(new URL(`${url}/mcp`));
   await client.connect(transport); t.after(() => client.close());
   assert.equal(transport.protocolVersion, '2025-11-25');
-  const list = await client.listTools(); assert.equal(list.tools.length, 6); assert.ok(!list.tools.some(x => /approve|pay|book/.test(x.name)));
+  const list = await client.listTools(); assert.equal(list.tools.length, 8); assert.ok(!list.tools.some(x => /approve|pay|book/.test(x.name)));
   const call = async (name, args) => { const r = await client.callTool({ name, arguments: args }); assert.ok(!r.isError, JSON.stringify(r)); return r.structuredContent; };
   const task = await call('report_repair', { description: 'Kitchen sink is leaking.', member: 'Alex' });
   const compared = await call('compare_quotes', { taskId: task.id });

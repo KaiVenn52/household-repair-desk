@@ -2,11 +2,11 @@
 
 ## Title
 
-Household Repair Desk | Alexa+ Hackathon Demo
+Household Repair Desk | Plans change. Your approval should, too.
 
 ## Description
 
-One leaking sink, two fictional quotes, and a repair plan the household can review.
+A cheaper-looking quote leaves out the seal. A $140 budget cannot cover the known complete scope. Just after Sam approves Monday, his schedule changes. The old plan is withdrawn, Tuesday works for Alex, and a fresh approval is required.
 
 This is an independent Alexa+ hackathon prototype. The video shows a real local web app with a guided, deterministic Alexa+ experience simulation. It is not connected to a real Alexa device or language model. Providers, source quotes, household members and calendars are fictional. No contractor is contacted, no appointment is booked, and no payment is made.
 
@@ -14,16 +14,16 @@ The project also includes a working MCP server using the official SDK, MCP 2025-
 
 Source and run instructions: https://github.com/KaiVenn52/household-repair-desk
 
-00:00 The household coordination problem
-00:17 Report a leaking kitchen sink
-00:31 Compare scope, exclusions and warranty
-00:52 Inspect the source quote
-01:08 Match household and provider availability
-01:23 Review and confirm as Sam
-01:42 Reload the saved plan and cancel locally
-02:00 MCP implementation and tested boundaries
+00:00 The cheaper quote's missing scope
+00:09 Check the source
+00:17 Keep the budget explicit
+00:29 Sam reviews Monday
+00:42 Sam's schedule changes
+00:53 A new plan for Alex
+01:05 Fresh consent and persistence
+01:16 Actual MCP calls and simulation disclosure
 
-Narration is synthetic English speech using Microsoft David Desktop. Captions are included. No third-party music or generated product UI is used.
+Narration uses Kokoro af_heart, a stock synthetic English voice generated locally. No voice cloning, third-party music or generated product UI is used. Planning and availability changes call the real MCP service over HTTP from the browser. No runtime language model is connected.
 
 ## Upload settings
 
@@ -32,6 +32,6 @@ Narration is synthetic English speech using Microsoft David Desktop. Captions ar
 - Altered/synthetic realistic content: no realistic person or real-world event has been synthesized; only disclosed computer narration accompanies actual screen recording.
 - Language: English.
 - Paid promotion: none.
-- File: `video/household-repair-desk-demo.mp4`, duration 140.8 seconds, 1920×1080.
+- File: `video/v2/household-repair-desk-demo.mp4`, approximately 91 seconds, 1920×1080. See video/v2/video-verification.json for exact duration and hash.
 
 Do not use a GitHub release video link as if it were a qualifying YouTube/Vimeo URL. Public hosting on those platforms remains a separate required field.

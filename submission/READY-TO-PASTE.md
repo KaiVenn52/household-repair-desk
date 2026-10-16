@@ -26,7 +26,9 @@ https://github.com/KaiVenn52/household-repair-desk
 
 Required public YouTube/Vimeo URL: pending a successful upload. Do not paste a placeholder or the GitHub release in this field as if it met the platform requirement.
 
-Review copy: https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.1.0
+Previous v0.1 review copy: https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.1.0
+
+Current v0.2 video: video/v2/household-repair-desk-demo.mp4 (local; publication status tracked separately).
 
 ## What inspired us
 
@@ -38,7 +40,7 @@ Household Repair Desk follows one leaking kitchen sink from report to a saved ho
 
 ## How we built it
 
-A Node.js application exposes six tools through the official MCP SDK using protocol 2025-11-25 and Streamable HTTP. The browser and MCP share domain rules for task state, quote scope, availability, versions and cancellation. Approval is a separate local browser operation requiring a current proposal, an expiring review secret and explicit consent. It is a demo interaction boundary, not production identity verification.
+A Node.js application exposes eight tools through the official MCP SDK using protocol 2025-11-25 and Streamable HTTP. The browser and MCP share domain rules for task state, quote scope, availability, versions and cancellation. Approval is a separate local browser operation requiring a current proposal, an expiring review secret and explicit consent. It is a demo interaction boundary, not production identity verification.
 
 Each task stores its own fictional calendar snapshot, so fresh demonstrations work during judging while an old plan's dates do not silently move. The English browser experience is a deterministic guided simulation, not a live Alexa client or LLM.
 
@@ -48,7 +50,7 @@ The scope difference between a subtotal and an all-in price was more useful than
 
 ## Accomplishments
 
-A complete bounded workflow, actual MCP HTTP calls with the official client, persistent task state, source-visible exclusions and explicit approval/cancellation behavior. Automated verification covers nine domain/MCP tests plus the browser flow, an axe scan of the approved state and three viewport widths. Public GitHub CI provides reproducible evidence.
+A complete bounded workflow, actual MCP HTTP calls with the official client, persistent task state, source-visible exclusions and explicit approval/cancellation behavior. Automated verification covers 14 domain/MCP tests plus the browser flow, an axe scan of the approved state and three viewport widths. Public GitHub CI provides reproducible evidence.
 
 ## What we learned
 
@@ -69,3 +71,9 @@ Clone the public repository, install Node.js 22 or newer, run `npm ci` and `npm 
 ## Truthful disclosure
 
 Local app and MCP service: implemented and tested. Real Alexa runtime, runtime model, authenticated household users, real calendars, contractor contact, booking and payment: not implemented or claimed. Codex assisted development. The video uses actual UI footage and disclosed synthetic English narration.
+
+## v0.2: when the household changes its mind
+
+Set a $140 cap: neither quote is eligible, because the $130 subtotal excludes parts and the complete quote is $145. Explicitly change the cap to $150. The planner selects Homekind on Monday with Sam at home. Approve as Sam, then select "Sam can't cover Monday." The old proposal and approval are withdrawn. Find another time: Tuesday with Alex. A new proposal requires a fresh review and approval. Reload to see the saved decision and history.
+
+The browser performs planning and availability changes via the real official SDK MCP client over HTTP. Eight tools are exposed; 14 domain/MCP tests and a full browser replan flow cover the changed behavior. Demo roles remain fictional and unauthenticated. No contractor is contacted. See docs/REFINEMENT-REVIEW.md and video/v2/video-verification.json for the refinement and recording evidence.

@@ -7,12 +7,13 @@ import { createApp } from '../src/server.js';
 const { app } = createApp({ dataFile: null, clock: () => new Date('2026-10-16T06:00:00Z') });
 const server = app.listen(0, '127.0.0.1'); await once(server, 'listening');
 const url = `http://127.0.0.1:${server.address().port}`;
-let browser; const errors = []; const checks = [];
+let browser; const errors = []; const checks = []; const rejectedRequests = [];
 mkdirSync('evidence', { recursive: true });
 try {
   const installedChrome = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
   browser = await chromium.launch({ headless: true, ...(existsSync(installedChrome) ? { executablePath: installedChrome } : {}) });
   const context = await browser.newContext({ viewport: { width: 1280, height: 980 } }); const page = await context.newPage(); page.setDefaultTimeout(15000);
+  page.on('response',async response=>{if(response.status()>=400){rejectedRequests.push({url:response.url(),status:response.status(),body:await response.text().catch(()=>'<unavailable>')});}});
   page.on('pageerror', error => errors.push(error.message)); page.on('console', msg => { if (msg.type() === 'error' && !/Failed to load resource: the server responded with a status of 400/.test(msg.text())) errors.push(msg.text()); });
   await page.goto(url); await page.getByText('No repairs yet.', { exact: false }).waitFor(); assert.equal(await page.title(), 'Household Repair Desk');
   await page.screenshot({ path: 'evidence/desktop-initial.png', fullPage: true });
@@ -30,8 +31,27 @@ try {
   checks.push('375 / 768 / 1280 px: no horizontal overflow');
   await page.getByRole('button', { name: 'Cancel this task' }).click(); await page.getByText('Cancelled locally. No provider was contacted.', { exact: false }).waitFor(); checks.push('cancel approved local plan');
   await page.getByLabel('What needs fixing?').fill('Please repair my broken roof.'); await page.getByRole('button', { name: 'Report repair' }).click(); await page.getByRole('alert').filter({ hasText: /leaking kitchen sink/ }).waitFor(); checks.push('unsupported repair error preserves report');
+  await page.getByLabel('What needs fixing?').fill('The kitchen sink is leaking again.'); await page.getByRole('button', { name: 'Report repair' }).click();
+  await page.getByLabel('Keep the known total under').fill('140'); await page.getByRole('button', { name: 'Find a plan' }).click();
+  await page.getByText('No complete quote fits that cap.', { exact:false }).waitFor(); assert.equal(await page.getByLabel('Keep the known total under').inputValue(),'140');
+  await page.getByLabel('Keep the known total under').fill('150'); await page.getByRole('button', { name:'Find a plan' }).click();
+  await page.getByRole('button', { name:"Sam can't cover Monday" }).waitFor();
+  await page.screenshot({path:'evidence/planned-within-budget.png',fullPage:true});
+  const firstPlan=await page.request.get(`${url}/api/desk`).then(r=>r.json()).then(d=>d.tasks.at(-1).proposal.id);
+  await page.getByRole('button', { name:"Sam can't cover Monday" }).click();
+  await page.getByText('We need another time.',{exact:true}).waitFor(); assert.equal(await page.getByRole('button',{name:'Review & confirm'}).count(),0);
+  await page.screenshot({path:'evidence/old-review-withdrawn.png',fullPage:true});
+  axe = await new AxeBuilder({ page }).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze(); assert.deepEqual(axe.violations.map(v=>v.id),[]);
+  await page.getByRole('button',{name:'Find another time'}).click(); await page.getByRole('button',{name:"Alex can't cover Tuesday"}).waitFor();
+  const nextPlan=await page.request.get(`${url}/api/desk`).then(r=>r.json()).then(d=>d.tasks.at(-1).proposal.id); assert.notEqual(firstPlan,nextPlan);
+  await page.getByRole('button',{name:'Review & confirm'}).click(); await expect(page.getByRole('dialog')).toBeVisible();
+  await page.getByLabel('Confirming as').selectOption('Alex'); await page.getByRole('checkbox').check(); await page.getByRole('button',{name:'Approve household plan'}).click();
+  await page.getByText('Approved by Alex.',{exact:false}).waitFor(); await page.reload(); await page.getByText('Approved by Alex.',{exact:false}).waitFor();
+  await page.screenshot({path:'evidence/replanned-for-alex.png',fullPage:true});
+  for(const width of [375,768,1280]) {await page.setViewportSize({width,height:960});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:`evidence/replan-${width}.png`,fullPage:true});}
+  checks.push('hard cap preserved → explicit budget change → real MCP plan → Sam unavailable → old review withdrawn → new Tuesday plan → fresh Alex approval → reload');
   await page.keyboard.press('Tab'); assert.ok(await page.evaluate(() => document.activeElement !== document.body)); checks.push('keyboard focus reaches interactive control');
-  assert.deepEqual(errors, []); checks.push('no page or console errors');
+  assert.deepEqual(errors, [],JSON.stringify(rejectedRequests)); checks.push('no page or console errors');
   const report = { status: 'PASS', browser: 'Playwright controlling installed Google Chrome; Browser plugin not available', url, checks, consoleErrors: errors, expectedNetworkErrors: ['HTTP 400 for intentionally unsupported repair'], externalAlexa: false, externalBooking: false, publicDeployment: false };
   writeFileSync('evidence/browser-report.json', JSON.stringify(report, null, 2)); console.log(JSON.stringify(report, null, 2));
 } finally { await browser?.close(); await new Promise(r => server.close(r)); }

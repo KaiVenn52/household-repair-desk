@@ -1,5 +1,13 @@
 # Status — 2026-10-16 (Asia/Kuala_Lumpur)
 
+## Current v0.2 refinement
+
+The current local revision adds budget-constrained planning, household availability changes, withdrawal of old consent and a fresh Alex approval after Sam's conflict. Eight MCP tools are implemented. Browser planning and availability changes invoke the official MCP client over actual local HTTP; no model is connected. All 14 domain/MCP tests and the complete browser workflow pass, including axe scans and 375/768/1280 px checks with no unexpected console errors.
+
+The new video is video/v2/household-repair-desk-demo.mp4, approximately 91 seconds, 1080p, with conversational English stock neural narration and single-line outlined subtitles. See video/v2/video-verification.json for exact duration and hash. A discarded encoded sync slate aligns footage and narration; startup time and encoder tail padding are not used to infer sync. The old v0.1 video and public release remain preserved.
+
+See docs/REFINEMENT-REVIEW.md for changes, test evidence, observed issues and remaining product limits. The following completed list and public CI/video entries describe the previous v0.1 release unless explicitly superseded above. No v0.2 public deployment, Alexa device test, qualifying YouTube/Vimeo upload or final event submission is claimed. Registration still requires participant eligibility/rules attestation and prior Amazon development experience; upload still requires a functioning native file selection after the bridge rejection.
+
 **Implementation, verification, English narrated video and public source release complete. Event registration, a qualifying YouTube/Vimeo upload and final submission remain pending.**
 
 ## Completed

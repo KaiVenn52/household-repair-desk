@@ -12,3 +12,11 @@ video/*.wav
 video/*.mp4
 video/recording.json
 .local-browser/
+.voice-env/
+video/models/
+video/v1/
+video/v2/audio/
+video/v2/raw/
+video/v2/*.wav
+video/v2/*.mp4
+video/v2/recording.json

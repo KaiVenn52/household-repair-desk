@@ -1,0 +1,3 @@
+f912f9e35b386955832092a2774f19aaf5e8df0f7014dade326991972a0f21af  household-repair-desk-v0.1.0-source.zip
+07a59159dffd13eb428377972dabe189101d3a484f81a2ee7f16db6cbc4dc97d  household-repair-desk-demo.mp4
+78e6b1c8b7e6c80933137d32c854175d3a5002ef65f6d3454de35fb9847f2621  demo-en.srt

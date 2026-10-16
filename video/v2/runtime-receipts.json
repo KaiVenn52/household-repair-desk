@@ -1,0 +1,34 @@
+{
+  "mode": "local fictional household",
+  "calls": [
+    {
+      "tool": "plan_repair",
+      "protocol": "2025-11-25",
+      "transport": "Streamable HTTP",
+      "outcome": "completed",
+      "at": "2026-10-16T14:29:52.129Z"
+    },
+    {
+      "tool": "plan_repair",
+      "protocol": "2025-11-25",
+      "transport": "Streamable HTTP",
+      "outcome": "completed",
+      "at": "2026-10-16T14:30:00.251Z"
+    },
+    {
+      "tool": "update_household_availability",
+      "protocol": "2025-11-25",
+      "transport": "Streamable HTTP",
+      "outcome": "completed",
+      "at": "2026-10-16T14:30:15.951Z"
+    },
+    {
+      "tool": "plan_repair",
+      "protocol": "2025-11-25",
+      "transport": "Streamable HTTP",
+      "outcome": "completed",
+      "at": "2026-10-16T14:30:26.792Z"
+    }
+  ],
+  "runtimeModelConnected": false
+}
