@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-16",
+  "timezone": "Asia/Kuala_Lumpur",
+  "nodeTests": { "command": "npm.cmd test", "total": 8, "passed": 8, "failed": 0 },
+  "mcp": { "officialSdk": "1.32.1", "negotiatedProtocol": "2025-11-25", "transport": "Streamable HTTP", "toolCount": 6, "realHttpClient": true },
+  "browserReport": "evidence/browser-report.json",
+  "visualInspection": ["evidence/desktop-quotes.png", "evidence/desktop-approved.png", "evidence/viewport-375.png"],
+  "evidenceScope": { "local": true, "fixtureSimulation": true, "realAlexaDevice": false, "liveModel": false, "deployment": false, "publication": false, "registration": false, "submission": false },
+  "video": { "scriptExists": true, "recorded": false, "uploaded": false },
+  "previewServerLeftRunning": false
+}

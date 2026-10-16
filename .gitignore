@@ -1,0 +1,13 @@
+node_modules/
+data/*.json
+data/*.tmp
+.env
+evidence/*.webm
+video/raw/
+delivery/*.zip
+delivery/rehearsal/
+video/render-frames/
+video/audio/
+video/*.wav
+video/*.mp4
+video/recording.json

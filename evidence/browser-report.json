@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "browser": "Playwright controlling installed Google Chrome; Browser plugin not available",
+  "url": "http://127.0.0.1:57732",
+  "checks": [
+    "report → compare → reject unavailable slot → review → explicit Sam approval → reload persistence",
+    "axe WCAG A/AA scan: approved desktop",
+    "375 / 768 / 1280 px: no horizontal overflow",
+    "cancel approved local plan",
+    "unsupported repair error preserves report",
+    "keyboard focus reaches interactive control",
+    "no page or console errors"
+  ],
+  "consoleErrors": [],
+  "expectedNetworkErrors": [
+    "HTTP 400 for intentionally unsupported repair"
+  ],
+  "externalAlexa": false,
+  "externalBooking": false,
+  "publicDeployment": false
+}

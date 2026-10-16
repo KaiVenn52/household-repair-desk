@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Household Repair Desk</title><link rel="icon" href="data:,"><link rel="stylesheet" href="/style.css"><script type="module" src="/app.js"></script></head>
+<body>
+<header><a class="wordmark" href="/">household<span> / repair desk</span></a><span class="mode">LOCAL DEMO</span></header>
+<main>
+<section class="intro"><div><p class="eyebrow">A LITTLE LESS HOUSEHOLD ADMIN</p><h1>A leak. Two quotes.<br>One less loose end.</h1><p class="lede">From “someone should fix that” to a repair plan everyone can see.</p></div><div class="scope"><span class="dot"></span><strong>Alexa+ experience simulation</strong><p>Fictional quotes and calendars. No live Alexa connection, contractor booking, or payment.</p></div></section>
+<div class="workspace">
+<section class="conversation" aria-labelledby="conversation-title"><div class="section-head"><h2 id="conversation-title">Let's sort it out</h2><span class="small">DEMO HOUSEHOLD</span></div>
+<div class="members"><span class="avatar">A</span><span>Alex & Sam</span><span class="small timezone">KUALA LUMPUR · UTC+08</span></div>
+<div id="messages" role="log" aria-label="Repair conversation" aria-live="polite"><div class="message assistant">What's broken at home? Try reporting the leaking kitchen sink. I'll help compare the sample quotes, then find a time someone is home.</div></div>
+<form id="report-form"><label for="description">What needs fixing?</label><textarea id="description" name="description" rows="3" minlength="8" maxlength="1000" required placeholder="The kitchen sink is leaking under the cabinet."></textarea><div class="form-bottom"><span class="small">Reporting as Alex · text simulation</span><button type="submit">Report repair <span aria-hidden="true">↗</span></button></div></form>
+<p class="footnote">A guided workflow, not a live language model. No microphone or household data leaves this local app.</p></section>
+<section class="task-panel" aria-labelledby="task-title"><div class="section-head"><h2 id="task-title">Your repair plan</h2><button id="refresh" class="text-button" type="button">Refresh</button></div><div id="error" role="alert" hidden></div><div id="task"><div class="empty"><div class="empty-mark" aria-hidden="true">⌂</div><h3>Start with the small thing.</h3><p>Report the leak to open a task.<br>We'll keep the details here.</p></div></div></section>
+</div>
+<section class="history"><div class="section-head"><h2>Household notebook</h2><span class="small">SAVED ON THIS COMPUTER</span></div><div id="history"></div></section>
+</main>
+<footer><span>Made for the moments between “I'll do it” and done.</span><span>Independent hackathon prototype · Not an Amazon product</span></footer>
+<dialog id="review"><form method="dialog"><div class="section-head"><h2>Review the repair plan</h2><button class="text-button" aria-label="Close review">Close</button></div></form><div id="review-details"></div><form id="approval-form"><label for="member">Confirming as (demo identity)</label><select id="member"><option>Alex</option><option>Sam</option></select><label class="check"><input id="confirm" type="checkbox" required> I approve this simulated household plan. I understand no contractor will be contacted and no payment will be made.</label><p id="review-error" role="alert"></p><button type="submit">Approve household plan</button></form></dialog>
+</body></html>

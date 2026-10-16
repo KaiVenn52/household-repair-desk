@@ -1,0 +1,10 @@
+[
+  {"id":"intro","narration":"A leaking sink should not become a week of household admin. Household Repair Desk keeps the report, quote tradeoffs, and family decision together. This is a local Alexa Plus experience simulation. The providers and calendars are fictional."},
+  {"id":"report","narration":"Alex reports a leaking kitchen sink. The repair becomes a saved task, rather than another message somebody has to remember. The prototype deliberately handles this one repair all the way through."},
+  {"id":"compare","narration":"Here are the two sample quotes. Clear Pipe is one hundred and thirty dollars before parts. Homekind is one hundred and forty five dollars including the standard seal. That fifteen dollar difference buys a more certain scope, and a longer warranty. We never invent the missing parts price."},
+  {"id":"source","narration":"The source quote is one click away. It states the callout, labor, unknown parts cost, warranty, and sample availability. These are fictional documents included with the project, not live contractor offers."},
+  {"id":"calendar","narration":"Now choose a time. Monday morning is blocked because nobody is home. Monday afternoon works for Homekind and for Sam. Choosing it creates a review request. It does not contact a contractor."},
+  {"id":"review","narration":"Sam reviews the provider, exact time, price, and scope. The request expires, and confirmation requires a current proposal and explicit consent. The assistant has no approval tool. Only this separate review step records the household decision."},
+  {"id":"persist","narration":"The plan is approved and saved locally. Reloading keeps the task and its timeline. Approved means the household agreed, not that a contractor is booked or paid. A cancellation is also recorded, without pretending to cancel an external appointment."},
+  {"id":"finish","narration":"Behind this simulation is a real MCP service using the official SDK and Streamable HTTP. Tests exercise its tools over HTTP, plus persistence, conflicts, and expired approvals. One repair, visible tradeoffs, and a clear boundary between planning and acting."}
+]
