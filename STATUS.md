@@ -1,4 +1,12 @@
-# Status — 2026-10-16 (Asia/Kuala_Lumpur)
+# Status — 2026-10-17 (Asia/Kuala_Lumpur)
+
+## Current v0.2.1 recovery audit
+
+Added actionable MCP schema error handling (HTTP 400, unchanged task), expired review renewal with a new proposal and secret, rejection of past appointments at approval time, and preservation of invalid browser budget input. Four before/after regression tests reproduce the old failures and verify the fixes. Full local verification: 18 domain/MCP tests passed, complete browser flow PASS, no unexpected console/page errors, tested accessibility scans and 375/768/1280 px overflow checks. The new recovery state also passes axe and the 375 px layout check.
+
+The existing 91.03-second video is preserved byte-for-byte (SHA-256 4bd0a630709f7850e05a60588d1fbde43851b381a206e4e0a6da13695b473091). It shows the unchanged primary flow; it does not claim to show expired review recovery. See docs/FINAL-AUDIT-20261017.md, submission/FRICTION-LOG.md and submission/FINAL-HUMAN-STEPS.md for the current audit and exact remaining participant actions. Event registration, public YouTube/Vimeo hosting and final submission still have no success receipt.
+
+The sections below preserve the v0.2 and v0.1 release history. Their test counts and CI links refer to those historical versions.
 
 ## Current v0.2 refinement
 

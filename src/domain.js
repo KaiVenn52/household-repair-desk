@@ -82,7 +82,23 @@ export class RepairDesk {
   review(id) {
     const task = this.task(id);
     if (task.status !== 'awaiting_approval') fail('INVALID_STATE', 'There is no pending request to review.');
+    if (new Date(task.proposal.expiresAt) <= this.clock()) fail('EXPIRED_APPROVAL', 'This review expired. Renew the review to obtain a fresh request.');
     return { task: this.publicTask(task), confirmationToken: task.proposal.token };
+  }
+  renewReview({taskId, version}) {
+    const task=this.task(taskId);
+    if(task.version!==version) fail('STALE_TASK','The task changed. Refresh before renewing the review.');
+    if(task.status!=='awaiting_approval') fail('INVALID_STATE','Only an expired pending review can be renewed.');
+    const old=task.proposal;
+    if(new Date(old.expiresAt)>this.clock()) fail('REVIEW_ACTIVE','This review is still active. Review the existing request.');
+    const slot=task.calendar.find(s=>s.id===old.slotId);
+    if(!slot || new Date(slot.start)<=this.clock()) fail('PAST_SLOT','This appointment is in the past. Change availability and find a future time, or report a new repair.');
+    if(!slot.householdAvailable || !slot.providers.includes(old.quoteId)) fail('UNAVAILABLE_SLOT','This time is no longer available. Find another time.');
+    task.previousPlans??=[];
+    task.previousPlans.push({proposalId:old.id,quoteId:old.quoteId,slotId:old.slotId,label:slot.label,amount:old.amount,approvedBy:null,withdrawnAt:this.clock().toISOString(),reason:'The previous review expired.'});
+    task.proposal=null;task.status='compared';
+    this.event(task,'review_renewed','The previous review expired. A new request keeps the same scope, price and time, and requires fresh explicit approval.');
+    return this.propose({taskId,version:task.version,quoteId:old.quoteId,slotId:old.slotId});
   }
   plan({ taskId, version, maxTotal = 150 }) {
     const task = this.task(taskId);
@@ -126,7 +142,10 @@ export class RepairDesk {
     if (task.version !== version) fail('STALE_TASK', 'The task changed. Review it again.');
     if (task.status !== 'awaiting_approval') fail('INVALID_STATE', 'This request is no longer awaiting approval.');
     if (task.proposal.id !== proposalId) fail('STALE_PROPOSAL', 'The proposal changed. Review it again.');
-    if (new Date(task.proposal.expiresAt) <= this.clock()) fail('EXPIRED_APPROVAL', 'The review expired. Cancel and create a fresh proposal.');
+    if (new Date(task.proposal.expiresAt) <= this.clock()) fail('EXPIRED_APPROVAL', 'The review expired. Use Renew review to obtain a fresh request for the same plan.');
+    const slot=task.calendar.find(s=>s.id===task.proposal.slotId);
+    if(!slot || new Date(slot.start)<=this.clock()) fail('PAST_SLOT','This appointment is in the past. Find a future time before approving.');
+    if(!slot.householdAvailable || !slot.providers.includes(task.proposal.quoteId)) fail('UNAVAILABLE_SLOT','This time is no longer available. Find another time before approving.');
     if (confirmed !== true || !['Alex', 'Sam'].includes(member)) fail('CONFIRMATION_REQUIRED', 'A demo household member must explicitly confirm the review.', 400);
     const actual = Buffer.from(task.proposal.token); const supplied = Buffer.from(typeof token === 'string' ? token : '');
     if (actual.length !== supplied.length || !timingSafeEqual(actual, supplied)) fail('INVALID_CONFIRMATION', 'Open the review screen before confirming.', 403);

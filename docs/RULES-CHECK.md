@@ -1,5 +1,7 @@
 # Official rules check — 2026-10-16, Asia/Kuala_Lumpur
 
+Rechecked live on October 17: the same deadline, Alexa+ MCP/simulation routes, public YouTube/Vimeo requirement and feedback requirements remain in the current official page. See FINAL-AUDIT-20261017.md for current implementation checks and FRICTION-LOG.md under submission/ for observed integration/documentation friction. No new eligibility or registration attestation is inferred.
+
 Sources: [official rules](https://amazonappdev2026.devpost.com/rules), [overview](https://amazonappdev2026.devpost.com/), [resources](https://amazonappdev2026.devpost.com/resources). Read live using the web tool. Agent Reach's Jina reader returned a 403 challenge; it was not treated as rule evidence.
 
 The submission window is August 31–October 23, 2026. The deadline converts from October 23 at 12:00 PDT to October 24 at 03:00 MYT. Development can proceed now.

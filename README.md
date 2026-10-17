@@ -4,6 +4,8 @@
 
 Turn a leaking kitchen sink into a household-approved repair plan, with the quote exclusions still visible.
 
+Current source: v0.2.1. Expired reviews can be renewed without losing the task; renewal keeps the same scope/time and issues a new proposal and secret for fresh explicit consent. Invalid MCP arguments produce useful validation errors. Approval rejects appointments whose start has passed. Verification now covers 18 domain/MCP tests and the full browser recovery flow; see docs/FINAL-AUDIT-20261017.md.
+
 Independent Alexa+ hackathon prototype. The web experience is a guided text simulation, not a live Alexa client or language model. The MCP server is real and uses the official SDK over Streamable HTTP. Quotes, providers, household members and calendars are fictional. Approval creates a local household record; no contractor is contacted and no booking or payment occurs.
 
 ## Run locally
@@ -71,6 +73,6 @@ The application itself does not need video tooling. To reproduce this optional r
 
 Set a $140 cap: neither quote is eligible, because the $130 subtotal excludes parts and the complete quote is $145. Explicitly change the cap to $150. The planner selects Homekind on Monday with Sam at home. Approve as Sam, then select "Sam can't cover Monday." The old proposal and approval are withdrawn. Find another time: Tuesday with Alex. A new proposal requires a fresh review and approval. Reload to see the saved decision and history.
 
-The browser performs planning and availability changes via the real official SDK MCP client over HTTP. Eight tools are exposed; 14 domain/MCP tests and a full browser replan flow cover the changed behavior. Demo roles remain fictional and unauthenticated. No contractor is contacted. See docs/REFINEMENT-REVIEW.md and video/v2/video-verification.json for the refinement and recording evidence.
+The browser performs planning and availability changes via the real official SDK MCP client over HTTP. Eight tools are exposed; the original v0.2 replan checks are extended to 18 tests in v0.2.1. Demo roles remain fictional and unauthenticated. No contractor is contacted. See docs/REFINEMENT-REVIEW.md and video/v2/video-verification.json for the refinement and recording evidence.
 
 The v0.2 video uses a local Kokoro af_heart stock neural voice and a new eight-scene actual UI recording. See docs/REFINEMENT-REVIEW.md for optional reproduction, model provenance and Windows path handling. The old Windows voice reproduction remains available for the preserved v0.1 artifact.

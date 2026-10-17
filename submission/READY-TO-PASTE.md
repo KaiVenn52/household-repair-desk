@@ -50,7 +50,7 @@ The scope difference between a subtotal and an all-in price was more useful than
 
 ## Accomplishments
 
-A complete bounded workflow, actual MCP HTTP calls with the official client, persistent task state, source-visible exclusions and explicit approval/cancellation behavior. Automated verification covers 14 domain/MCP tests plus the browser flow, an axe scan of the approved state and three viewport widths. Public GitHub CI provides reproducible evidence.
+A complete bounded workflow, actual MCP HTTP calls with the official client, persistent task state, source-visible exclusions and explicit approval/cancellation behavior. Current automated verification covers 18 domain/MCP tests plus browser replan and expired-review recovery flows, accessibility scans and three viewport widths. Public GitHub CI provides reproducible evidence for the published revisions; current local verification is recorded separately in docs/FINAL-AUDIT-20261017.md.
 
 ## What we learned
 
@@ -76,4 +76,4 @@ Local app and MCP service: implemented and tested. Real Alexa runtime, runtime m
 
 Set a $140 cap: neither quote is eligible, because the $130 subtotal excludes parts and the complete quote is $145. Explicitly change the cap to $150. The planner selects Homekind on Monday with Sam at home. Approve as Sam, then select "Sam can't cover Monday." The old proposal and approval are withdrawn. Find another time: Tuesday with Alex. A new proposal requires a fresh review and approval. Reload to see the saved decision and history.
 
-The browser performs planning and availability changes via the real official SDK MCP client over HTTP. Eight tools are exposed; 14 domain/MCP tests and a full browser replan flow cover the changed behavior. Demo roles remain fictional and unauthenticated. No contractor is contacted. See docs/REFINEMENT-REVIEW.md and video/v2/video-verification.json for the refinement and recording evidence.
+The browser performs planning and availability changes via the real official SDK MCP client over HTTP. Eight tools are exposed; 18 domain/MCP tests and browser replan/recovery flows cover the current behavior. An expired review can be renewed with a new proposal and secret; previous consent cannot carry forward. Demo roles remain fictional and unauthenticated. No contractor is contacted. See docs/FINAL-AUDIT-20261017.md and video/v2/video-verification.json for current evidence.

@@ -1,9 +1,10 @@
 const $ = s => document.querySelector(s);
 const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 let data, activeId, review, busy = false;
+const budgetDrafts=new Map();
 async function api(path, body) {
   const response = await fetch(`/api/${path}`, body === undefined ? {} : { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-  const result = await response.json(); if (!response.ok) throw new Error(result.error ?? 'Request failed. Retry.'); return result;
+  const result = await response.json(); if (!response.ok) {const error=new Error(result.error ?? 'Request failed. Retry.');error.code=result.code;throw error;} return result;
 }
 function message(text, role = 'assistant') { const el = document.createElement('div'); el.className = `message ${role}`; el.textContent = text; $('#messages').append(el); $('#messages').scrollTop = $('#messages').scrollHeight; }
 async function action(fn) {
@@ -31,7 +32,7 @@ function render() {
   if (t.proposal) {
     const q = data.quotes.find(q => q.id === t.proposal.quoteId), s = (t.calendar ?? data.slots).find(s => s.id === t.proposal.slotId);
     content += `<div class="notice"><strong>${escape(q.provider)}</strong><br>${escape(s.label)}<br>USD $${q.total} ${q.partsIncluded ? 'including standard seal' : '+ unknown parts'}<br>${t.status === 'approved' ? `Approved by ${escape(t.proposal.approvedBy)}. Saved locally; no contractor booking or payment.` : t.status === 'cancelled' ? 'Cancelled locally. No provider was contacted.' : 'Waiting for household review. No provider contacted.'}</div>`;
-    if (t.status === 'awaiting_approval') content += '<div class="task-actions"><button data-action="review">Review & confirm</button></div>';
+    if (t.status === 'awaiting_approval') content += new Date(t.proposal.expiresAt)<=new Date() ? '<div class="notice" role="status">This review expired. Renew it to keep the same scope and time with a fresh approval request.</div><div class="task-actions"><button data-action="renew">Renew review</button></div>' : '<div class="task-actions"><button data-action="review">Review & confirm</button></div>';
     if (['awaiting_approval','approved'].includes(t.status) && s.host) {
       const day = new Date(s.start).toLocaleDateString('en-US', { timeZone: 'Asia/Kuala_Lumpur', weekday: 'long' });
       content += `<div class="handoff"><span class="small">IF PLANS CHANGE</span><button class="secondary" data-action="availability" data-slot="${s.id}" data-member="${s.host}">${s.host} can't cover ${day}</button><p class="footnote">Updates the fictional household calendar and withdraws this plan.</p></div>`;
@@ -47,7 +48,9 @@ function render() {
   if (t.status !== 'cancelled') content += '<div class="task-actions"><button class="text-button" data-action="cancel">Cancel this task</button></div>';
   content += `<details class="audit"><summary>Decision history · ${t.events.length} updates</summary><div class="timeline" tabindex="0" role="region" aria-label="Task timeline">${t.events.map(e => `<div class="event"><time>${new Date(e.at).toLocaleString('en-GB',{timeZone:'Asia/Kuala_Lumpur'})}</time>${escape(e.detail)}</div>`).join('')}</div></details>`;
   $('#task').innerHTML = content;
+  if($('#max-total') && budgetDrafts.has(t.id)) $('#max-total').value=budgetDrafts.get(t.id);
 }
+$('#task').addEventListener('input',event=>{if(event.target.id==='max-total') budgetDrafts.set(activeId,event.target.value);});
 $('#report-form').addEventListener('submit', event => { event.preventDefault(); action(async () => { const description = $('#description').value; const task = await api('report', { description, member: 'Alex' }); activeId = task.id; message(description, 'user'); message('Repair noted. I have two fictional quotes to compare. The cheaper-looking one excludes parts.'); $('#description').value = ''; await load(); }); });
 $('#refresh').addEventListener('click', () => action(load));
 $('#history').addEventListener('click', event => { const id = event.target.closest('[data-open]')?.dataset.open; if (id) { activeId = id; render(); } });
@@ -62,14 +65,15 @@ $('#task').addEventListener('click', event => {
     return;
   }
   action(async () => {
-    if (button.dataset.action === 'plan' || button.dataset.action === 'replan') { const maxTotal = button.dataset.action === 'plan' ? Number($('#max-total').value.trim()) : t.planReasoning?.maxTotal ?? 150; const result = await api('plan', { taskId: t.id, version: t.version, maxTotal }); await load(); if (result.blocked) { $('#error').textContent = result.message; $('#error').hidden = false; } }
+    if (button.dataset.action === 'plan' || button.dataset.action === 'replan') { const maxTotal = button.dataset.action === 'plan' ? Number($('#max-total').value.trim()) : t.planReasoning?.maxTotal ?? 150; if(!Number.isFinite(maxTotal) || maxTotal<=0 || maxTotal>5000) throw new Error('Enter a USD budget above zero and at most 5,000.'); const result = await api('plan', { taskId: t.id, version: t.version, maxTotal }); budgetDrafts.delete(t.id); await load(); if (result.blocked) { $('#error').textContent = result.message; $('#error').hidden = false; } }
+    if (button.dataset.action === 'renew') {await api('renew-review',{taskId:t.id,version:t.version});await load();}
     if (button.dataset.action === 'availability') { await api('availability', { taskId: t.id, version: t.version, slotId: button.dataset.slot, member: button.dataset.member, available: false, reason: 'My schedule changed. I cannot be home for this repair.' }); await load(); }
     if (button.dataset.action === 'compare') { const result = await api('compare', { taskId: t.id }); message(result.recommendation); await load(); }
     if (button.dataset.slot && button.dataset.provider) { await api('propose', { taskId: t.id, version: t.version, quoteId: button.dataset.provider, slotId: button.dataset.slot }); message('That time works with the sample calendars. Review the exact provider, scope, and cost before confirming. Nothing has been booked.'); await load(); }
     if (button.dataset.action === 'cancel') { await api('cancel', { taskId: t.id, version: t.version }); message('Cancelled locally. No booking or payment took place.'); await load(); }
     if (button.dataset.action === 'review') {
-      review = await api(`review/${t.id}`); const q = data.quotes.find(q => q.id === t.proposal.quoteId), s = (t.calendar ?? data.slots).find(s => s.id === t.proposal.slotId);
-      $('#review-details').innerHTML = `<strong>${escape(q.provider)}</strong><br>${escape(s.label)} · UTC+08<br>USD $${q.total} ${q.partsIncluded ? 'including standard seal' : '+ unknown parts cost'}<br>${q.warrantyDays}-day warranty<br><small>Review expires ${new Date(t.proposal.expiresAt).toLocaleTimeString('en-GB',{timeZone:'Asia/Kuala_Lumpur'})}. Demo identities have no authentication.</small>`;
+      review = await api(`review/${t.id}`); const current=review.task; const q = data.quotes.find(q => q.id === current.proposal.quoteId), s = (current.calendar ?? data.slots).find(s => s.id === current.proposal.slotId);
+      $('#review-details').innerHTML = `<strong>${escape(q.provider)}</strong><br>${escape(s.label)} · UTC+08<br>USD $${q.total} ${q.partsIncluded ? 'including standard seal' : '+ unknown parts cost'}<br>${q.warrantyDays}-day warranty<br><small>Review expires ${new Date(current.proposal.expiresAt).toLocaleTimeString('en-GB',{timeZone:'Asia/Kuala_Lumpur'})}. Demo identities have no authentication.</small>`;
       $('#confirm').checked = false; $('#review-error').textContent = ''; $('#review').showModal();
     }
   });
@@ -77,6 +81,6 @@ $('#task').addEventListener('click', event => {
 $('#approval-form').addEventListener('submit', async event => {
   event.preventDefault(); const submit = event.submitter; submit.disabled = true;
   try { await api('approve', { taskId: review.task.id, proposalId: review.task.proposal.id, version: review.task.version, token: review.confirmationToken, confirmed: $('#confirm').checked, member: $('#member').value }); $('#review').close(); message('Household plan approved and saved. This is your local record; a real contractor has not been contacted.'); await load(); }
-  catch (error) { $('#review-error').textContent = error.message; } finally { submit.disabled = false; }
+  catch (error) { if(error.code==='EXPIRED_APPROVAL') {$('#review').close();await load();$('#error').textContent=error.message;$('#error').hidden=false;} else $('#review-error').textContent = error.message; } finally { submit.disabled = false; }
 });
 action(load);

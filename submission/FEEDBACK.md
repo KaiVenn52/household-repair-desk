@@ -39,6 +39,9 @@ Do not report hypothetical Alexa latency, device reliability, preview errors or 
 
 ## Additional observed preparation issues
 
+- v0.2.1: SDK schema failures may be returned as plain-text tool errors, while our domain failures carry JSON content. Our browser adapter assumed JSON for both and converted invalid budget input into HTTP 500. It now handles both shapes and returns actionable HTTP 400 without mutating task state. See FRICTION-LOG.md for reproducible steps and attribution.
+- v0.2.1: added expired-review recovery and past-appointment rejection. Four before/after regression tests and the browser recovery scenario verify these product changes; no Alexa device behavior is inferred.
+
 - v0.2: browser planning and availability invoke the official MCP client over actual Streamable HTTP. Completed tool receipts are available from local /api/mcp-activity; runtimeModelConnected remains false.
 - v0.2: replaced Windows David narration with local Kokoro af_heart stock neural speech. No clone or paid API is used. Unicode Windows paths required an ASCII subst drive for the native phonemizer. This is a preparation compatibility issue, not an Alexa defect.
 - v0.2: encoder tail padding made total-duration-based trimming inaccurate. A discarded visual slate now locates the start in encoded frames for synchronization checks.

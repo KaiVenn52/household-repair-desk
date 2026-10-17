@@ -27,20 +27,26 @@ export function createApp({ dataFile = resolve(root, 'data/tasks.json'), clock }
   app.post('/api/compare', (req, res) => res.json(desk.compare(req.body)));
   app.post('/api/propose', (req, res) => res.json(desk.propose(req.body)));
   app.get('/api/review/:id', (req, res) => res.json(desk.review(req.params.id)));
+  app.post('/api/renew-review', (req,res)=>res.json(desk.renewReview(req.body)));
   app.post('/api/approve', (req, res) => res.json(desk.approve(req.body)));
   app.post('/api/cancel', (req, res) => res.json(desk.cancel(req.body)));
   // The visible planning/replanning flow invokes the real MCP endpoint. The
   // target is derived from the local socket, never from user-supplied URLs.
   async function invokeMcp(req, res, name) {
-    const client = new Client({ name: 'household-web-experience', version: '0.2.0' });
+    const client = new Client({ name: 'household-web-experience', version: '0.2.1' });
     try {
       await client.connect(new StreamableHTTPClientTransport(new URL(`http://127.0.0.1:${req.socket.localPort}/mcp`)));
       const result = await client.callTool({ name, arguments: req.body });
       mcpActivity.push({ tool: name, protocol: '2025-11-25', transport: 'Streamable HTTP', outcome: result.isError ? 'rejected' : 'completed', at: new Date().toISOString() });
       if (mcpActivity.length > 50) mcpActivity.shift();
       if (result.isError) {
-        const detail = JSON.parse(result.content.find(c => c.type === 'text').text);
-        return res.status(409).json(detail);
+        const text=result.content?.find(c=>c.type==='text')?.text ?? '';
+        // SDK schema errors are plain text, while domain errors use JSON.
+        // Both are expected failures; neither should become an HTTP 500.
+        let detail;
+        try {detail=JSON.parse(text);} catch {}
+        if(detail && typeof detail.code==='string' && typeof detail.error==='string') return res.status(409).json(detail);
+        return res.status(400).json({code:'INVALID_TOOL_ARGUMENTS',error:name==='plan_repair' ? 'Check the planning arguments. Enter a USD budget above zero and at most 5,000, then refresh the task if needed.' : 'Check the availability arguments and refresh the task before retrying.'});
       }
       res.json({ ...result.structuredContent, toolReceipt: { name, protocol: '2025-11-25', transport: 'Streamable HTTP', executed: true } });
     } finally { await client.close(); }
