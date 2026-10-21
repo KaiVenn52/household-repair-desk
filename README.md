@@ -84,3 +84,9 @@ Set a $140 cap: neither quote is eligible, because the $130 subtotal excludes pa
 The browser performs planning and availability changes via the real official SDK MCP client over HTTP. Eight tools are exposed; the original v0.2 replan checks are extended to 18 tests in v0.2.1. Demo roles remain fictional and unauthenticated. No contractor is contacted. See docs/REFINEMENT-REVIEW.md and video/v2/video-verification.json for the refinement and recording evidence.
 
 The v0.2 video uses a local Kokoro af_heart stock neural voice and a new eight-scene actual UI recording. See docs/REFINEMENT-REVIEW.md for optional reproduction, model provenance and Windows path handling. The old Windows voice reproduction remains available for the preserved v0.1 artifact.
+
+## Public review demo
+
+Open https://household-repair-desk.ablepond1024.chatgpt.site without signing in or running a local server. The public interface is a fictional household simulation. Use sample notes only. Each browser gets its own demo session; it expires after 48 hours.
+
+Anonymous deployed-browser validation passed: full approval and replanning flow, real HTTP MCP receipts, session isolation, reload persistence, 375/768/1280 px layout and axe A/AA. See [public verification](evidence/hosted/public-report.json) and [deployment details](docs/HOSTED-DEPLOYMENT.md). The standalone hosted MCP endpoint is `/api/mcp`; `/mcp` is reserved by the hosting gateway. The local Express endpoint remains `/mcp`.

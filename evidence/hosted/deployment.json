@@ -1,0 +1,20 @@
+{
+  "id": "appgdep_6ad8de02778c8191aa445d255e2436a2",
+  "project_id": "appgprj_6ad8dbd8c06c81918396dd87a9419223",
+  "title": "Household Repair Desk",
+  "version_id": "appgprj_6ad8dbd8c06c81918396dd87a9419223~appgver_e0bce6d190c48191be5ef63368658638",
+  "type": "publish",
+  "status": "succeeded",
+  "url": "https://household-repair-desk.ablepond1024.chatgpt.site",
+  "has_mcp": false,
+  "screenshot_asset_pointer": null,
+  "provider_deployment_id": "site---6ad8dbd8c06c81918396dd87a9419223",
+  "failure_message": null,
+  "env_set_revision": 0,
+  "updated_at": "2026-10-21T15:45:26.317780+00:00",
+  "access_mode": "public",
+  "source_commit": "f35c34455100f1506f8624b6283366b842d00722",
+  "mcpEndpoint": "https://household-repair-desk.ablepond1024.chatgpt.site/api/mcp",
+  "anonymousBrowserWorkflow": "PASS; evidence/hosted/public-report.json",
+  "hasSitePlugin": false
+}
