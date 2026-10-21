@@ -8,6 +8,8 @@ Current source: v0.3.0. Planning now distinguishes price, household availability
 
 Independent Alexa+ hackathon prototype. The web experience is a guided text simulation, not a live Alexa client or language model. The MCP server is real and uses the official SDK over Streamable HTTP. Quotes, providers, household members and calendars are fictional. Approval creates a local household record; no contractor is contacted and no booking or payment occurs.
 
+The local UI refinement replaces the promotional hero and chat bubbles with a compact repair workspace, household activity notes, invoice-style quote comparison and labelled visit details. See [the design and validation notes](docs/UI-REFINEMENT-20261021.md), [desktop evidence](evidence/desktop-approved.png) and [mobile evidence](evidence/viewport-375.png). The updated real-interface recording lives in `video/v3/`; the published v0.3.0 release and its older video are unchanged.
+
 ## Run locally
 
 Requires Node.js 22 or newer (developed with Node 24.20.0).

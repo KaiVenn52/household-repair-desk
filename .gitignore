@@ -20,3 +20,7 @@ video/v2/raw/
 video/v2/*.wav
 video/v2/*.mp4
 video/v2/recording.json
+video/v3/raw/
+video/v3/*.wav
+video/v3/*.mp4
+video/v3/recording.json

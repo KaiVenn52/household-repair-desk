@@ -1,0 +1,143 @@
+1
+00:00:00,000 --> 00:00:01,835
+That hundred-and-thirty-dollar quote looks cheaper.
+
+2
+00:00:01,835 --> 00:00:04,404
+But it leaves out the part we
+
+3
+00:00:04,404 --> 00:00:06,972
+actually need. Until someone prices the seal,
+
+4
+00:00:06,972 --> 00:00:08,807
+we don't know the bill.
+
+5
+00:00:09,472 --> 00:00:11,771
+You can open the quote and check
+
+6
+00:00:11,771 --> 00:00:14,069
+that yourself. The other one is a
+
+7
+00:00:14,069 --> 00:00:16,368
+hundred and forty-five dollars, with the standard
+
+8
+00:00:16,368 --> 00:00:17,025
+seal included.
+
+9
+00:00:17,679 --> 00:00:20,255
+Say our limit is a hundred and
+
+10
+00:00:20,255 --> 00:00:22,830
+forty dollars. The assistant stops here. It
+
+11
+00:00:22,830 --> 00:00:25,405
+doesn't call an unknown bill affordable. I'll
+
+12
+00:00:25,405 --> 00:00:27,981
+change that limit to a hundred and
+
+13
+00:00:27,981 --> 00:00:28,717
+fifty, explicitly.
+
+14
+00:00:29,687 --> 00:00:32,714
+Homekind, Monday afternoon, with Sam at home.
+
+15
+00:00:32,714 --> 00:00:35,741
+The app checked the scope and both
+
+16
+00:00:35,741 --> 00:00:38,769
+calendars. Sam reviews the details and approves.
+
+17
+00:00:38,769 --> 00:00:41,363
+So far, a perfectly ordinary plan.
+
+18
+00:00:42,012 --> 00:00:44,389
+Then Sam's schedule changes. This is the
+
+19
+00:00:44,389 --> 00:00:46,766
+bit I care about. That Monday plan
+
+20
+00:00:46,766 --> 00:00:49,143
+is withdrawn immediately. A yes for an
+
+21
+00:00:49,143 --> 00:00:51,520
+old plan must never become a yes
+
+22
+00:00:51,520 --> 00:00:52,879
+for a different one.
+
+23
+00:00:53,528 --> 00:00:56,228
+Find another time. Tuesday works for Alex,
+
+24
+00:00:56,228 --> 00:00:58,927
+and the price is still a hundred
+
+25
+00:00:58,927 --> 00:01:01,627
+and forty-five dollars. Same repair, same budget.
+
+26
+00:01:01,627 --> 00:01:04,327
+A new plan, with a new approval
+
+27
+00:01:04,327 --> 00:01:04,712
+request.
+
+28
+00:01:05,366 --> 00:01:08,067
+Alex checks the details and confirms. Reload
+
+29
+00:01:08,067 --> 00:01:10,767
+the page: the decision and the change
+
+30
+00:01:10,767 --> 00:01:13,468
+history are still here. Nobody has contacted
+
+31
+00:01:13,468 --> 00:01:15,783
+a contractor or charged a card.
+
+32
+00:01:16,439 --> 00:01:19,482
+This is a working MCP service, with
+
+33
+00:01:19,482 --> 00:01:22,524
+planning and calendar changes called over real
+
+34
+00:01:22,524 --> 00:01:25,566
+HTTP from the web app. The household
+
+35
+00:01:25,566 --> 00:01:28,608
+and quotes are simulated. When life changes,
+
+36
+00:01:28,608 --> 00:01:30,347
+yesterday's permission isn't enough.

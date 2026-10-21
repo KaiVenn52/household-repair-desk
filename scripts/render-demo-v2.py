@@ -1,15 +1,17 @@
 """Render the real 16:9 browser recording with stock neural narration."""
 import hashlib,json,pathlib,re,subprocess
 ROOT=pathlib.Path(__file__).resolve().parents[1]
-import os
+import os,sys
 os.chdir(ROOT)
-OUT=pathlib.Path('video/v2')
+output=sys.argv[1] if len(sys.argv)>1 else 'video/v2'
+assert re.fullmatch(r'video/v\d+',output),'Use a project-local video/vN output folder.'
+OUT=pathlib.Path(output)
 def run(args): subprocess.run(args,cwd=ROOT,check=True)
 def stamp(t):
     n=round(t*1000)
     return f'{n//3600000:02}:{n//60000%60:02}:{n//1000%60:02},{n%1000:03}'
-scenes=json.loads((OUT/'timeline.json').read_text())
-recording=json.loads((OUT/'recording.json').read_text())
+scenes=json.loads((OUT/'timeline.json').read_text(encoding='utf-8'))
+recording=json.loads((OUT/'recording.json').read_text(encoding='utf-8'))
 captions=[];offset=0
 for scene,mark in zip(scenes,recording['marks']):
     words=scene['narration'].split();chunks=[];chunk=[]
@@ -42,7 +44,7 @@ pixels=subprocess.check_output(['ffmpeg','-hide_banner','-loglevel','error','-i'
 slate=[i//12 for i in range(0,len(pixels),12) if pixels[i]>220 and pixels[i+1]<35 and pixels[i+2]>220]
 assert slate,'Missing encoded synchronization slate'
 lead=(max(slate)+1)/fps
-vf="scale=1920:1080,subtitles=video/v2/demo-en.srt:force_style='FontName=Arial,FontSize=10,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,BorderStyle=1,Outline=1.3,Shadow=0,MarginV=14'"
+vf=f"scale=1920:1080,subtitles={OUT.as_posix()}/demo-en.srt:force_style='FontName=Arial,FontSize=10,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,BorderStyle=1,Outline=1.3,Shadow=0,MarginV=14'"
 target=OUT/'household-repair-desk-demo.mp4'
 run(['ffmpeg','-y','-hide_banner','-loglevel','warning','-ss',str(lead),'-i',str(raw),'-i',str(OUT/'narration.wav'),'-t',str(offset),'-vf',vf,'-map','0:v:0','-map','1:a:0','-c:v','libx264','-preset','medium','-crf','19','-pix_fmt','yuv420p','-r','30','-c:a','aac','-b:a','160k','-movflags','+faststart',str(target)])
 probe=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_format','-show_streams','-of','json',str(target)],text=True))
