@@ -33,7 +33,7 @@ export function createApp({ dataFile = resolve(root, 'data/tasks.json'), clock }
   // The visible planning/replanning flow invokes the real MCP endpoint. The
   // target is derived from the local socket, never from user-supplied URLs.
   async function invokeMcp(req, res, name) {
-    const client = new Client({ name: 'household-web-experience', version: '0.2.1' });
+    const client = new Client({ name: 'household-web-experience', version: '0.3.0' });
     try {
       await client.connect(new StreamableHTTPClientTransport(new URL(`http://127.0.0.1:${req.socket.localPort}/mcp`)));
       const result = await client.callTool({ name, arguments: req.body });

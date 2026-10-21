@@ -2,7 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 
 export function createMcpServer(desk) {
-  const server = new McpServer({ name: 'household-repair-desk', version: '0.2.1' });
+  const server = new McpServer({ name: 'household-repair-desk', version: '0.3.0' });
   const taskId = z.string().uuid(); const version = z.number().int().nonnegative();
   const tools = [
     ['report_repair', 'Report a leaking kitchen sink in the fictional household. Other repair types are unsupported.', { description: z.string().min(8).max(1000), member: z.enum(['Alex', 'Sam']) }, a => desk.report(a), false],

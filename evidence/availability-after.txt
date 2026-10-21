@@ -1,0 +1,27 @@
+PLANNING BLOCKED
+The kitchen sink is leaking.
+Reported by Alex · Task 818dbed7 · Asia/Kuala_Lumpur
+Known price fits. We need someone at home.
+
+The known price fits your $150 cap. No future time works for the household and provider together. Update availability, then find a plan again. Your budget has not changed.
+
+Who can be home again?
+Sam can cover Monday again
+
+Monday, October 26 · 14:00–15:00 · explicit demo calendar update
+
+Alex can cover Tuesday again
+
+Tuesday, October 27 · 10:00–11:00 · explicit demo calendar update
+
+After changing availability, select Find a plan. Every new proposal needs fresh approval.
+
+Keep the known total under
+USD $
+
+Unknown extra costs never count as staying within budget.
+
+Planning checks · why this time?
+Find a plan
+Cancel this task
+Decision history · 5 updates

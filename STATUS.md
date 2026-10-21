@@ -1,4 +1,12 @@
-# Status — 2026-10-17 (Asia/Kuala_Lumpur)
+# Status — 2026-10-21 (Asia/Kuala_Lumpur)
+
+## Current v0.3.0 product review
+
+Reproduced and corrected misleading budget guidance when no household slot is available. Planning exposes budget/availability/expired-calendar causes and the actual slot checks. The interface permits an explicit host restoration, then requires a new plan and fresh consent. Selected notebook records survive reload; missing selections fall back safely. Expired calendars have a fresh-report path while retaining historical dates and tasks. Mobile active tasks put the current decision before the conversation, and repeated blocker notices are consolidated.
+
+Domain/MCP verification: 22 tests passed. Expanded browser scenarios and screenshots are recorded in evidence/browser-report.json. The review, before/after findings and exact product limits are in docs/PRODUCT-REVIEW-20261021.md. The existing 91.03-second video is preserved unchanged; no new device, deployment, public YouTube/Vimeo link, registration or final submission is claimed.
+
+The sections below preserve previous versions and their historical test counts and CI references.
 
 ## Current v0.2.1 recovery audit
 

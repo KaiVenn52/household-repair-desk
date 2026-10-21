@@ -39,6 +39,9 @@ Do not report hypothetical Alexa latency, device reliability, preview errors or 
 
 ## Additional observed preparation issues
 
+- v0.3: planner failures were previously described as budget failures even when the known price fit and both hosts were unavailable. The domain now records distinct blocker causes and evaluated slots. Explicit host restoration and a fresh proposal close the recovery path. This was our product logic/copy issue, not an Amazon service failure.
+- v0.3: screenshot inspection led to a second mobile iteration: put the active decision before the conversation, merge duplicate blocker notices and place the expandable planning checks next to the action. Automated layout/accessibility checks and screenshots cover the changed state.
+
 - v0.2.1: SDK schema failures may be returned as plain-text tool errors, while our domain failures carry JSON content. Our browser adapter assumed JSON for both and converted invalid budget input into HTTP 500. It now handles both shapes and returns actionable HTTP 400 without mutating task state. See FRICTION-LOG.md for reproducible steps and attribution.
 - v0.2.1: added expired-review recovery and past-appointment rejection. Four before/after regression tests and the browser recovery scenario verify these product changes; no Alexa device behavior is inferred.
 

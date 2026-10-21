@@ -4,7 +4,7 @@
 
 Turn a leaking kitchen sink into a household-approved repair plan, with the quote exclusions still visible.
 
-Current source: v0.2.1. Expired reviews can be renewed without losing the task; renewal keeps the same scope/time and issues a new proposal and secret for fresh explicit consent. Invalid MCP arguments produce useful validation errors. Approval rejects appointments whose start has passed. Verification now covers 18 domain/MCP tests and the full browser recovery flow; see docs/FINAL-AUDIT-20261017.md.
+Current source: v0.3.0. Planning now distinguishes price, household availability and expired-date blockers. If both hosts become unavailable, explicitly restore a host, find a new plan and approve afresh. Inspect the actual planning checks, resume the selected notebook task after reload, and start a fresh report when old sample dates expire. Verification covers 22 domain/MCP tests and the expanded browser flow; see docs/PRODUCT-REVIEW-20261021.md. Previous expired-review and validation protections remain in place.
 
 Independent Alexa+ hackathon prototype. The web experience is a guided text simulation, not a live Alexa client or language model. The MCP server is real and uses the official SDK over Streamable HTTP. Quotes, providers, household members and calendars are fictional. Approval creates a local household record; no contractor is contacted and no booking or payment occurs.
 
@@ -59,7 +59,7 @@ Host/Origin validation and a restrictive content policy protect the local demo. 
 
 Public source: https://github.com/KaiVenn52/household-repair-desk
 
-Current v0.2: [91.03-second narrated demo, captions and verified source archive](https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.2.0). Runtime commit ceca672 passed [Linux CI](https://github.com/KaiVenn52/household-repair-desk/actions/runs/38916798878). This release is a review copy; required YouTube/Vimeo hosting and final event submission remain pending.
+Preserved v0.2 recording: [91.03-second narrated demo and captions](https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.2.0). It shows the primary workflow; current recovery additions have separate browser/test evidence. Historical runtime commit ceca672 passed [Linux CI](https://github.com/KaiVenn52/household-repair-desk/actions/runs/38916798878). This release is a review copy; required YouTube/Vimeo hosting and final event submission remain pending.
 
 The previous v0.1 demo is preserved in the [release](https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.1.0). It uses actual app footage and disclosed synthetic narration. This GitHub asset is a preview; the hackathon's required public YouTube/Vimeo URL is a separate prerequisite and is not claimed here.
 

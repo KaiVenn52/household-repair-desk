@@ -106,13 +106,21 @@ export class RepairDesk {
     if (!Number.isFinite(maxTotal) || maxTotal <= 0 || maxTotal > 5000) fail('INVALID_BUDGET', 'Set a USD budget above zero and at most 5,000.', 400);
     this.compare({ taskId });
     const quoteChecks = quotes.map(q => ({ quoteId: q.id, source: q.source, knownTotal: q.partsIncluded, amount: q.total, eligible: q.partsIncluded && q.total <= maxTotal, reason: !q.partsIncluded ? 'Parts are extra and unknown; the subtotal cannot guarantee this budget.' : q.total > maxTotal ? `The known total exceeds the USD ${maxTotal} budget.` : 'Known total fits the budget, including the standard seal.' }));
-    const options = quotes.filter(q => quoteChecks.find(c => c.quoteId === q.id).eligible).flatMap(q => task.calendar.filter(s => s.householdAvailable && s.providers.includes(q.id) && new Date(s.start) > this.clock()).map(s => ({ quoteId: q.id, slotId: s.id, start: s.start, label: s.label, host: s.host, amount: q.total })));
+    const eligibleQuotes=quotes.filter(q=>quoteChecks.find(c=>c.quoteId===q.id).eligible);
+    const slotChecks=eligibleQuotes.flatMap(q=>task.calendar.map(s=>{
+      const reason=new Date(s.start)<=this.clock() ? 'This time has passed.' : !s.householdAvailable ? s.reason : !s.providers.includes(q.id) ? 'This provider is unavailable.' : `${s.host} can be home and this provider is available.`;
+      return {quoteId:q.id,slotId:s.id,start:s.start,label:s.label,host:s.host,amount:q.total,eligible:new Date(s.start)>this.clock() && s.householdAvailable && s.providers.includes(q.id),reason};
+    }));
+    const options=slotChecks.filter(s=>s.eligible);
     options.sort((a,b) => a.start.localeCompare(b.start) || a.amount - b.amount);
-    task.planReasoning = { maxTotal, currency: 'USD', quoteChecks, excludedSlots: task.calendar.filter(s => !s.householdAvailable).map(s => ({ slotId: s.id, label: s.label, reason: s.reason })), alternatives: options.slice(1), policy: 'Earliest future slot with someone home and a known total within budget. A cheaper subtotal is not treated as a guaranteed total.' };
+    task.planReasoning = { maxTotal, currency: 'USD', quoteChecks, slotChecks, blockedReason:null, blockedMessage:null, excludedSlots: slotChecks.filter(s=>!s.eligible), alternatives: options.slice(1), policy: 'Earliest future slot with someone home and a known total within budget. A cheaper subtotal is not treated as a guaranteed total.' };
     if (!options.length) {
+      const blockedReason=!eligibleQuotes.length ? 'budget' : !task.calendar.some(s=>new Date(s.start)>this.clock()) ? 'calendar_expired' : 'availability';
+      const message=blockedReason==='budget' ? `No plan fits your $${maxTotal} cap with a known total. Clear Pipe still needs a parts quote. Homekind is $145. Your budget has not been raised.` : blockedReason==='calendar_expired' ? `These sample dates are in the past. Report this leak again for upcoming sample dates; this task's dates and history stay fixed. Your $${maxTotal} cap has not changed.` : `The known price fits your $${maxTotal} cap. No future time works for the household and provider together. Update availability, then find a plan again. Your budget has not changed.`;
+      task.planReasoning.blockedReason=blockedReason;task.planReasoning.blockedMessage=message;
       task.status = 'planning_blocked';
-      this.event(task, 'plan_blocked', `No known total and available household slot fits the USD ${maxTotal} budget. No review request created.`); this.save();
-      return { task: this.publicTask(task), blocked: true, message: `No plan fits your $${maxTotal} cap with a known total. Clear Pipe still needs a parts quote. Homekind is $145. Your budget has not been raised.`, transport: 'MCP Streamable HTTP', simulated: true };
+      this.event(task, 'plan_blocked', message); this.save();
+      return { task: this.publicTask(task), blocked: true, message, transport: 'MCP Streamable HTTP', simulated: true };
     }
     const choice = options[0];
     const planned = this.propose({ taskId, quoteId: choice.quoteId, slotId: choice.slotId, version: task.version });

@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "browser": "Playwright controlling installed Google Chrome; Browser plugin not available",
-  "url": "http://127.0.0.1:53393",
+  "url": "http://127.0.0.1:60547",
   "checks": [
     "report → compare → reject unavailable slot → review → explicit Sam approval → reload persistence",
     "axe WCAG A/AA scan: approved desktop",
@@ -10,6 +10,9 @@
     "unsupported repair error preserves report",
     "hard cap preserved → explicit budget change → real MCP plan → Sam unavailable → old review withdrawn → new Tuesday plan → fresh Alex approval → reload",
     "invalid budget preserved → review expires while modal open → rejected approval → renew exact plan → fresh Sam consent → reload",
+    "both hosts unavailable → correct calendar explanation without raising budget → restore Sam → new plan and fresh approval; real planning checks visible",
+    "selected notebook task survives reload; missing saved ID safely falls back to the latest task",
+    "expired sample dates → fresh report with upcoming dates; old calendar and task history retained",
     "keyboard focus reaches interactive control",
     "no unexpected page or console errors; exact intentional HTTP failures checked"
   ],
