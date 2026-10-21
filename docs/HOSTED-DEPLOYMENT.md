@@ -3,7 +3,7 @@
 The local Express app remains unchanged and loopback-only. The hosted build uses a separate Web Standards Worker adapter and the same RepairDesk domain rules and official MCP SDK.
 
 - Per-browser fictional households are stored in D1 behind a random HttpOnly, Secure, SameSite=Strict cookie. Expiry is 48 hours; a second browser cannot see or change the first browser's repairs.
-- Browser planning and availability routes invoke the hosted /mcp endpoint over real HTTP through the official SDK, using only that visitor's demo cookie.
+- Browser planning and availability routes invoke the hosted /api/mcp endpoint over real HTTP through the official SDK, using only that visitor's demo cookie. Sites reserves /mcp at its gateway, so the standalone 2025-11-25 endpoint uses /api/mcp; it is not a Sites plugin registration.
 - The MCP interface supports protocol 2025-11-25. It has no booking, payment or approval tool. Explicit UI approval remains required.
 - D1 writes use compare-and-swap revisions, rejecting concurrent changes. 12 repairs, 150 KB state, 50 recent tool receipts and 16 KB request bodies bound a demo session.
 - Cross-origin and cross-site requests are rejected. Public task JSON omits confirmation secrets.

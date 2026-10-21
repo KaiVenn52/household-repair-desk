@@ -1,5 +1,6 @@
 {
   "status": "PASS",
+  "url": "http://127.0.0.1:52166",
   "scope": "Bundled production Worker on Node Web Standards preview, real SQLite-backed D1 adapter; not yet a public deployment",
   "checks": [
     "Hosted Worker: report → hard budget rejection → real HTTP MCP plan → explicit approval",
@@ -15,28 +16,28 @@
       "protocol": "2025-11-25",
       "transport": "Streamable HTTP",
       "outcome": "completed",
-      "at": "2026-10-21T15:37:54.879Z"
+      "at": "2026-10-21T15:43:49.458Z"
     },
     {
       "tool": "plan_repair",
       "protocol": "2025-11-25",
       "transport": "Streamable HTTP",
       "outcome": "completed",
-      "at": "2026-10-21T15:37:55.095Z"
+      "at": "2026-10-21T15:43:49.590Z"
     },
     {
       "tool": "update_household_availability",
       "protocol": "2025-11-25",
       "transport": "Streamable HTTP",
       "outcome": "completed",
-      "at": "2026-10-21T15:37:55.623Z"
+      "at": "2026-10-21T15:43:49.944Z"
     },
     {
       "tool": "plan_repair",
       "protocol": "2025-11-25",
       "transport": "Streamable HTTP",
       "outcome": "completed",
-      "at": "2026-10-21T15:37:55.801Z"
+      "at": "2026-10-21T15:43:50.043Z"
     }
   ]
 }

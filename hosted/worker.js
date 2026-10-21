@@ -32,7 +32,7 @@ async function bodyOf(request){
  try{return JSON.parse(text);}catch{throw Object.assign(new Error('Send a valid JSON request.'),{status:400});}
 }
 function attach(response,s){
- const headers=new Headers(response.headers);for(const [k,v] of Object.entries(security))headers.set(k,v);
+ const headers=new Headers(response.headers);for(const [k,v] of Object.entries(security))if(k!=='Content-Security-Policy'||!headers.has(k))headers.set(k,v);
  if(s?.fresh)headers.append('Set-Cookie',`${SESSION}=${s.id}; Path=/; Max-Age=172800; HttpOnly; Secure; SameSite=Strict`);
  return new Response(response.body,{status:response.status,headers});
 }
@@ -41,15 +41,18 @@ async function route(request,env){
  if(request.headers.get('origin') && request.headers.get('origin')!==url.origin)return json({error:'Origin not allowed.'},403);
  if(['cross-site'].includes(request.headers.get('sec-fetch-site')))return json({error:'Cross-site access is not allowed.'},403);
  if(path==='/api/health')return json({ok:true,mode:'hosted-fixture-simulation',mcp:'2025-11-25',storage:'D1 per-browser session, 48-hour expiry',externalBooking:false,modelConnected:false});
- if(request.method==='GET' && (path==='/'||assets[path]!==undefined)){
+ if(['GET','HEAD'].includes(request.method) && (path==='/'||assets[path]!==undefined)){
   const key=path==='/'?'/index.html':path;
-  return new Response(assets[key],{headers:{'Content-Type':key.endsWith('.html')?'text/html; charset=utf-8':key.endsWith('.css')?'text/css; charset=utf-8':key.endsWith('.js')?'text/javascript; charset=utf-8':'text/plain; charset=utf-8'}});
+  const headers={'Content-Type':key.endsWith('.html')?'text/html; charset=utf-8':key.endsWith('.css')?'text/css; charset=utf-8':key.endsWith('.js')?'text/javascript; charset=utf-8':'text/plain; charset=utf-8'};
+  let content=assets[key];
+  if(key.endsWith('.html')){const nonce=crypto.randomUUID();headers['Content-Security-Policy']=security['Content-Security-Policy'].replace("script-src 'self'",`script-src 'self' 'nonce-${nonce}'`);content=content.replace('<script type="module"',`<script nonce="${nonce}" type="module"`);}
+  return new Response(request.method==='HEAD'?null:content,{headers});
  }
  if(!path.startsWith('/api/')&&path!=='/mcp')return json({error:'Not found.'},404);
  const s=await session(request,env);const desk=new RepairDesk(null);desk.tasks=s.tasks;
  let response;
  try{
-  if(path==='/mcp'){
+  if(path==='/mcp'||path==='/api/mcp'){
    if(request.method!=='POST')return attach(new Response(null,{status:405,headers:{Allow:'POST'}}),s);
    const body=await bodyOf(request);
    const version=request.headers.get('mcp-protocol-version');
@@ -78,7 +81,7 @@ async function route(request,env){
     // this visitor's HttpOnly demo cookie. No user-controlled URL is accepted.
     const client=new Client({name:'household-hosted-experience',version:'0.3.0'});
     try{
-     await client.connect(new StreamableHTTPClientTransport(new URL('/mcp',url.origin),{requestInit:{headers:{Cookie:`${SESSION}=${s.id}`}}}));
+     await client.connect(new StreamableHTTPClientTransport(new URL('/api/mcp',url.origin),{requestInit:{headers:{Cookie:`${SESSION}=${s.id}`}}}));
      const tool=name==='plan'?'plan_repair':'update_household_availability';
      const result=await client.callTool({name:tool,arguments:body});
      if(result.isError){let detail;try{detail=JSON.parse(result.content?.find(c=>c.type==='text')?.text??'');}catch{}

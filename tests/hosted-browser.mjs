@@ -9,7 +9,7 @@ const server=external?null:startHostedPreview();if(server)await once(server,'lis
 const browser=await chromium.launch({headless:true,...(existsSync('C:/Program Files/Google/Chrome/Application/chrome.exe')?{executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'}:{})});
 const errors=[],checks=[];mkdirSync('evidence/hosted',{recursive:true});
 try{
- const context=await browser.newContext({viewport:{width:1280,height:900}}),page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+ const context=await browser.newContext({viewport:{width:1280,height:900}}),page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&!/Failed to load resource: the server responded with a status of (400|409)/.test(m.text()))errors.push(m.text());});
  await page.goto(base);await page.getByLabel('What needs fixing?').fill('The kitchen sink is leaking under the cabinet.');await page.getByRole('button',{name:'Report repair'}).click();await page.getByRole('button',{name:'Find a plan'}).waitFor();
  const cookies=await context.cookies();assert.ok(cookies.some(c=>c.name==='__Host-repair-demo'&&c.httpOnly&&c.secure&&c.sameSite==='Strict'));
  await page.getByLabel('Keep the known total under').fill('140');await page.getByRole('button',{name:'Find a plan'}).click();await page.getByText('No complete quote fits that cap.',{exact:false}).waitFor();
