@@ -1,4 +1,6 @@
 node_modules/
+dist/
+delivery/*.tar.gz
 data/*.json
 data/*.tmp
 .env
@@ -24,3 +26,4 @@ video/v3/raw/
 video/v3/*.wav
 video/v3/*.mp4
 video/v3/recording.json
+outputs/

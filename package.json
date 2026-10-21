@@ -9,7 +9,9 @@
   "scripts": {
     "start": "node src/server.js",
     "test": "node --test --test-concurrency=1 tests/*.test.js",
-    "test:ui": "node tests/browser.mjs"
+    "test:ui": "node tests/browser.mjs",
+    "build": "node scripts/build-hosted.mjs",
+    "test:hosted": "node scripts/build-hosted.mjs && node tests/hosted-browser.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.1",
@@ -18,6 +20,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
-    "@playwright/test": "^1.64.1"
+    "@playwright/test": "^1.64.1",
+    "esbuild": "^0.28.2"
   }
 }

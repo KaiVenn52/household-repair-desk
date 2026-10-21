@@ -22,6 +22,12 @@ npm.cmd start
 
 Open http://127.0.0.1:4317. The server binds to loopback only. It does not need credentials, an Alexa device, an Amazon account or an external model. Stop with Ctrl+C.
 
+### Hosted build
+
+`npm run build` bundles the same domain rules, official MCP SDK Web Standards transport and refined interface into a Sites Worker. The hosted adapter stores separate fictional households in D1, keyed by a random HttpOnly, Secure, SameSite=Strict browser cookie. Demo sessions expire after 48 hours. Never enter personal household details. Optimistic revision checks reject concurrent writes instead of silently overwriting a newer plan. This changes the hosting and storage adapter; it does not add real Alexa, contractor or payment integration.
+
+`npm run test:hosted` runs the bundled Worker through a Web Standards preview backed by SQLite, then verifies the actual browser flow, session isolation and real HTTP MCP calls. For a deployed endpoint, `HOSTED_TEST_URL` selects the public test target; a successful local preview is not evidence of public deployment. See `evidence/hosted/public-report.json` only after it exists and reports PASS.
+
 ## Try the complete flow
 
 - Report: `The kitchen sink is leaking under the cabinet.`
