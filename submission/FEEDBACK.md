@@ -1,55 +1,43 @@
-# Product feedback and observed friction
+# Product feedback
 
-Local development notes only. These are not feedback on an actual Alexa device or Amazon preview API. No production user research was performed.
+This feedback concerns the tools actually used. We did not test an Alexa device, Amazon preview API, production household account, real calendar or real contractor integration.
 
-## Tools and purpose
+## Official MCP SDK and Zod
 
-- Official `@modelcontextprotocol/sdk`: server tools, Streamable HTTP transport and an independent client for integration tests.
-- Express: local app, source quote documents and review routes.
-- Zod: typed tool argument validation.
-- Node.js built-ins: local storage, task IDs and test runner.
-- Playwright and axe-core: rendered workflow and automated accessibility verification.
-- Codex: implementation assistance. The app does not call Codex or another model at runtime.
-- Microsoft System.Speech / Microsoft David Desktop: offline English narration for the actual product recording. FFmpeg/FFprobe: audio normalization, captions, encoding and media verification. These are preparation tools, not app runtime integrations.
+We used @modelcontextprotocol/sdk 1.32.1 to expose eight tools and call planning and availability changes over real Streamable HTTP, using MCP 2025-11-25. Zod validates tool arguments. The standard SDK transport made the same workflow usable from the local application and a Web Standards Worker. We would use it again.
 
-## What worked well
+The main integration friction was error shape: schema validation can return plain-text tool content while our application failures use structured JSON. Our first adapter assumed both were JSON and converted a normal bad budget into HTTP 500. It now handles both shapes, returns an actionable error and preserves the task. A complete client adapter example covering both cases would improve onboarding. This was our integration assumption, not an SDK outage; tests/recovery.test.js reproduces the correction.
 
-The official stateless HTTP example provided a small starting point. Sharing domain rules between browser actions and MCP tools avoids implementing different approval behavior for each surface. The alternate web simulation route lets this prototype demonstrate the household workflow without asserting access to a real Alexa runtime.
+A future Alexa+ onboarding guide showing how an assistant proposal reaches explicit, auditable human approval would be valuable. We deliberately keep approval outside the MCP tools. This is a feature request based on the application architecture, not a report of testing an unavailable Alexa runtime.
 
-## What needs work
+## Node.js and Express
 
-The server and browser are not yet an authenticated household product. Integrating a real assistant requires a clear identity and approval handoff; a tool response must not itself count as household consent. A future Amazon integration guide showing how a proposal becomes an explicit, auditable customer approval would help this use case.
+Node.js provides task IDs, local persistence and the built-in test runner. Express serves the local app, quote documents and review routes. Sharing one domain layer across browser and MCP paths reduced divergent state behavior. The local application starts without Amazon credentials or paid services, which is useful for independent review. File persistence is suitable for the local prototype; the public adapter uses a database and isolated visitor state instead. We would use this stack again for a small, testable local service.
 
-## Onboarding
+## Sites, Cloudflare Workers and D1
 
-The local process starts without an Amazon account or credentials. The first sandboxed npm install failed resolving registry.npmjs.org; an authorized network-enabled retry installed the official runtime dependencies. This was an environment issue, not an SDK or Amazon service defect. Jina's rules fetch hit a 403 challenge; the official rules were read through the web tool instead.
+Sites deploys the bundled Web Standards Worker and provisions D1. D1 stores isolated fictional households with optimistic revision checks; a random HttpOnly cookie identifies a browser demo session. Sessions expire after 48 hours. Native deployment status and anonymous browser tests provided separate evidence of publication and correct operation.
 
-## Would we build with these tools again?
+Local tests did not expose that the hosting gateway reserves /mcp. The first public planning call failed because it did not reach our Worker. Moving the standalone protocol endpoint to /api/mcp fixed it; the public workflow was then retested. Clearer reserved-route documentation would help. Cloudflare also injects a script into HTML; a per-response CSP nonce resolved the resulting console violation without permitting arbitrary inline scripts. These are hosting integration observations, not Amazon API defects. We would use this hosting approach again for a bounded demo with small durable state.
 
-Yes for the official MCP SDK and local web stack: they make the bounded workflow independently executable and testable. An actual Alexa+ runtime decision needs direct onboarding and device/preview testing; that experience has not happened here.
+## esbuild
 
-## Friction entries
+esbuild bundles the official SDK, domain rules and embedded UI assets into one Worker entrypoint. It made the deployment reproducible without introducing a second product implementation. The local disk adapter needed a build-time compatibility layer because hosted persistence uses D1. We would reuse the bundler and keep the domain logic shared.
 
-| Task | Expected / actual | Severity | Workaround | Suggestion |
-|---|---|---|---|---|
-| Read live rules via Jina | Rules text / 403 challenge | Minor, research environment | Read official page via web tool | A downloadable dated rules file would simplify evidence capture. |
-| Install runtime packages in restricted shell | Dependencies / DNS ENOTFOUND | Moderate, local environment | Authorized network-enabled install | Document network requirements; do not blame the SDK. |
+## Playwright and axe-core
 
-Do not report hypothetical Alexa latency, device reliability, preview errors or user adoption. Add further friction only after reproducing it, with exact versions and evidence.
+Playwright tests the full repair and recovery flow in real Chrome, as well as independent hosted visitors and public HTTPS behavior. axe-core checks rendered WCAG A/AA rules at representative states. Automated assertions caught a test harness race around asynchronous review visibility; waiting for the real visible state fixed it. These tools are useful again, but their checks do not replace human layout and interaction review. We inspected desktop, mobile and recorded frames separately.
 
-## Additional observed preparation issues
+## Codex
 
-- v0.3: planner failures were previously described as budget failures even when the known price fit and both hosts were unavailable. The domain now records distinct blocker causes and evaluated slots. Explicit host restoration and a fresh proposal close the recovery path. This was our product logic/copy issue, not an Amazon service failure.
-- v0.3: screenshot inspection led to a second mobile iteration: put the active decision before the conversation, merge duplicate blocker notices and place the expandable planning checks next to the action. Automated layout/accessibility checks and screenshots cover the changed state.
+Codex assisted implementation, review, tests, UI refinement, documentation and the demo workflow. The product does not call Codex or another language model at runtime. Before/after tests, browser evidence, deployment status and public checks were used to distinguish generated proposals from observed results. We would use it again with explicit evidence boundaries.
 
-- v0.2.1: SDK schema failures may be returned as plain-text tool errors, while our domain failures carry JSON content. Our browser adapter assumed JSON for both and converted invalid budget input into HTTP 500. It now handles both shapes and returns actionable HTTP 400 without mutating task state. See FRICTION-LOG.md for reproducible steps and attribution.
-- v0.2.1: added expired-review recovery and past-appointment rejection. Four before/after regression tests and the browser recovery scenario verify these product changes; no Alexa device behavior is inferred.
+## Kokoro and FFmpeg / FFprobe
 
-- v0.2: browser planning and availability invoke the official MCP client over actual Streamable HTTP. Completed tool receipts are available from local /api/mcp-activity; runtimeModelConnected remains false.
-- v0.2: replaced Windows David narration with local Kokoro af_heart stock neural speech. No clone or paid API is used. Unicode Windows paths required an ASCII subst drive for the native phonemizer. This is a preparation compatibility issue, not an Alexa defect.
-- v0.2: encoder tail padding made total-duration-based trimming inaccurate. A discarded visual slate now locates the start in encoded frames for synchronization checks.
+Kokoro af_heart supplies locally generated stock synthetic English narration. FFmpeg combines the actual UI recording, normalized audio and single-line captions; FFprobe checks streams, dimensions and duration. We did not clone a person's voice, use third-party music or generate fake product screens. Earlier preparation tried Windows speech and an online voice service; neither is the current v3 narration. Native Windows path encoding and video synchronization needed explicit handling. We would reuse this local pipeline, with frame and audio checks before publication.
 
-- Linux CI exposed a race in the test harness: checking dialog visibility immediately after the trigger click sometimes ran before the asynchronous review request finished. Using Playwright's waiting visibility assertion fixed the test. The actual app continued showing its pending state until the request completed.
-- Fixed-date samples would expire before the judging period. New tasks now generate next-week example slots and preserve their calendar snapshot; a regression test covers the November judging date without changing older tasks.
-- Online Edge TTS returned HTTP 403. The delivered narration uses the installed Windows voice offline instead.
-- The connected Chrome Browser Bridge refused the YouTube file-selection operation (`Not allowed`). The standard uploader and account were accessible, but no successful media attachment or public YouTube video is claimed. This is a preparation/tool-access issue, not an Alexa SDK failure.
+## Onboarding and observed limits
+
+Dependency installation initially encountered a local DNS restriction; an authorized network retry succeeded. The rules page required a different supported reader after a challenge blocked Jina. Browser account verification and file attachment access affected publication preparation. Those issues are not presented as Alexa latency, reliability or adoption findings.
+
+The current YouTube upload succeeded after the participant completed Google identity verification. Its public status and 91-second duration were checked without supplying login cookies. Event registration remains a separate process and no final submission is claimed.

@@ -1,79 +1,70 @@
-# Final field bank — Household Repair Desk
+# Household Repair Desk — final field bank
 
-Prepared English text. These are content blocks for the final form, not proof that an online submission was saved. Exact event fields can only be audited after registration is completed.
+Prepared final English copy. Saved local text is not evidence of a saved event draft or submission.
 
 ## Project name
-
 Household Repair Desk
 
 ## Elevator pitch
-
-Turn a leaking kitchen sink into a household-approved repair plan: compare quote exclusions, match sample calendars, and keep an auditable decision before anyone contacts or pays a contractor.
+Compare the full repair cost, find someone to be home, and withdraw old approval when plans change. Every new plan needs fresh household consent.
 
 ## Primary track
-
 Alexa+
 
-## Build with
+## Mini challenges
+None claimed.
 
-Node.js, JavaScript, Express, Model Context Protocol, official MCP TypeScript SDK, Zod, Streamable HTTP, Playwright, axe-core.
+## Live demo
+https://household-repair-desk.ablepond1024.chatgpt.site
 
-## Repository URL
-
+## Source repository
 https://github.com/KaiVenn52/household-repair-desk
+Public, MIT licensed, with local and hosted build instructions.
 
-## Demo URL
+## Demo video
+https://www.youtube.com/watch?v=Eh4b-RJH8jc
 
-Required public YouTube/Vimeo URL: pending a successful upload. Do not paste a placeholder or the GitHub release in this field as if it met the platform requirement.
+Published publicly on October 22, 2026. A cookie-free yt-dlp metadata check confirms availability=public and duration=91 seconds. Separate English captions were uploaded and saved.
 
-Previous v0.1 review copy: https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.1.0
+## Built with
+JavaScript, Node.js, Express, official Model Context Protocol SDK, Zod, Streamable HTTP, Cloudflare Workers and D1 through Sites, esbuild, Playwright, axe-core. Preparation: Codex, Kokoro, FFmpeg.
 
-Current v0.2 review copy: https://github.com/KaiVenn52/household-repair-desk/releases/tag/v0.2.0 . This is not the required YouTube/Vimeo URL.
-
-## What inspired us
-
-A household repair often stalls between “I'll sort it” and an actual decision. One person has a quote, another knows the calendar, and the cheapest-looking number may exclude parts. We wanted an assistant that keeps that coordination visible without quietly turning a proposal into a booking.
+## Inspiration
+A repair can fall apart after everyone agrees to it. One person has the quote, another has the calendar, and the cheapest number may leave out parts. We focused on the moment after a plan is made: if nobody can be home anymore, that plan should lose its approval immediately.
 
 ## What it does
+Household Repair Desk follows a fictional leaking kitchen sink from report to a recorded household decision. It compares a $130 subtotal with unknown parts against a $145 quote that includes the standard seal, keeps the budget explicit, and chooses the earliest future time that works for the provider and someone at home.
 
-Household Repair Desk follows one leaking kitchen sink from report to a saved household decision. It compares two fictional source quotes, explains the unknown parts cost and warranty difference, checks sample provider and household availability, and asks Alex or Sam to explicitly review the exact plan. The task and timeline survive reloads and server restarts. Cancellation is recorded locally.
+After Sam approves Monday, changing his availability withdraws the old plan and its approval. The planner can propose Tuesday with Alex, but Alex must review and approve that new proposal. An expired review can be renewed without reviving old consent. If both hosts are away, the app explains the calendar blocker instead of asking for a larger budget.
+
+The public demo needs no login or installation. Each browser receives an isolated demo household stored on the server; sessions expire after 48 hours. All identities, quote documents, providers and calendars are fictional. No contractor is contacted, no appointment is booked, and no payment is made.
 
 ## How we built it
+The same RepairDesk domain rules power the local Express application and a hosted Web Standards Worker. The official MCP SDK exposes eight tools using MCP 2025-11-25 and Streamable HTTP. Browser planning and availability changes invoke the actual HTTP MCP endpoint, not a label-only mock. The hosted endpoint is /api/mcp because the hosting gateway reserves /mcp; the local endpoint remains /mcp.
 
-A Node.js application exposes eight tools through the official MCP SDK using protocol 2025-11-25 and Streamable HTTP. The browser and MCP share domain rules for task state, quote scope, availability, versions and cancellation. Approval is a separate local browser operation requiring a current proposal, an expiring review secret and explicit consent. It is a demo interaction boundary, not production identity verification.
+Approval is a separate browser review operation requiring the exact current proposal, its version, an expiring confirmation secret and explicit consent. Tools cannot approve a plan. Public task responses omit confirmation secrets. Hosted storage uses D1 and revision checks to reject conflicting writes. A random HttpOnly browser cookie isolates visitors; it is a demo session, not real household identity verification.
 
-Each task stores its own fictional calendar snapshot, so fresh demonstrations work during judging while an old plan's dates do not silently move. The English browser experience is a deterministic guided simulation, not a live Alexa client or LLM.
+The Alexa+ experience is a clearly labeled deterministic simulation. There is no live Alexa device, production Amazon API or runtime language model connection.
 
-## Challenges we ran into
+## Challenges
+We had to distinguish an unknown final price from a lower subtotal, and a calendar problem from an insufficient budget. We also had to invalidate both pending and completed approvals after schedule changes, without erasing the decision history. Fixed example dates would expire before judging, so new tasks generate future sample slots while old tasks keep their original calendar snapshot.
 
-The scope difference between a subtotal and an all-in price was more useful than simply sorting quotes by price. We also separated “household approved” from “contractor booked,” rejected unavailable times and stale confirmations, and replaced fixed sample dates so judging-period demos remain usable. Linux CI exposed an asynchronous dialog assertion in the test harness; waiting for the visible review state fixed it.
+Public deployment exposed a reserved MCP path and a CSP incompatibility with the hosting edge. We moved the standalone hosted endpoint to /api/mcp, added a per-response script nonce, and repeated the full anonymous browser workflow against the deployed site.
 
 ## Accomplishments
-
-A complete bounded workflow, actual MCP HTTP calls with the official client, persistent task state, source-visible exclusions and explicit approval/cancellation behavior. Current verification covers 22 domain/MCP tests plus browser replan, expired-review recovery, host restoration, selected-task reload and expired-calendar flows, accessibility scans and three viewport widths. Public GitHub CI provides reproducible evidence for published revisions; the current product review is in docs/PRODUCT-REVIEW-20261021.md.
+A complete public, working demo with explicit household approval, recoverable failures and actual MCP transport calls. All 22 domain/MCP tests pass. Browser verification covers budgets, unavailable slots, approval, cancellation, changed availability, expired reviews, restored hosts, saved selection and stale dates. A separate anonymous public test verifies the deployed workflow, two-session isolation, persistence, accessibility and 375/768/1280 pixel layouts. Linux CI also passes.
 
 ## What we learned
+An assistant should not treat a plan as authority to act. The useful work is keeping the scope, schedule and approval tied to the same current proposal, and being precise about what changed when that proposal stops working.
 
-The useful assistant behavior is not choosing the lowest number. It is explaining what that number leaves out, finding a time somebody can supervise, and keeping authority to act separate from the plan.
-
-## What's next
-
-Authenticated household roles, current provider quotes, real calendars and a model client can build on the same review boundary. The prototype does not claim those integrations today. External bookings and payments would need their own reviewed action and evidence.
-
-## Product feedback
-
-Use the complete, source-specific answers in `submission/FEEDBACK.md`. No actual Alexa device or preview API feedback is claimed. No AWS or Open Source mini challenge is claimed.
+## What is next
+Authenticated household roles, live quotes, real calendar integration and an assistant model client. Each would retain the same explicit approval boundary; real external bookings or payments would require an additional reviewed action. No user study or measured financial savings are claimed.
 
 ## Testing instructions
+Open the public demo. Report: The kitchen sink is leaking under the cabinet. Set the budget to 140 and select Find a plan: the complete scope cannot fit. Explicitly change the cap to 150, find the plan, review and approve as Sam. Select Sam can't cover Monday, then Find another time. Review the new Tuesday plan as Alex and approve afresh. Reload and inspect Decision history. Use fictional details only.
 
-Clone the public repository, install Node.js 22 or newer, run `npm ci` and `npm start`, then open http://127.0.0.1:4317. Report “The kitchen sink is leaking under the cabinet,” compare both quotes, choose Homekind and an available afternoon slot, review as Sam, check the consent box and approve. Reload and inspect the saved timeline. No credentials, device or paid service is required. All household identities, providers, quotes and calendars are fictional.
+## Product feedback and friction log
+Use submission/FEEDBACK.md and submission/FRICTION-LOG.md. No AWS Builder or Open Source mini challenge is claimed. No actual Alexa device or preview API experience is asserted.
 
-## Truthful disclosure
-
-Local app and MCP service: implemented and tested. Real Alexa runtime, runtime model, authenticated household users, real calendars, contractor contact, booking and payment: not implemented or claimed. Codex assisted development. The video uses actual UI footage and disclosed synthetic English narration.
-
-## v0.2: when the household changes its mind
-
-Set a $140 cap: neither quote is eligible, because the $130 subtotal excludes parts and the complete quote is $145. Explicitly change the cap to $150. The planner selects Homekind on Monday with Sam at home. Approve as Sam, then select "Sam can't cover Monday." The old proposal and approval are withdrawn. Find another time: Tuesday with Alex. A new proposal requires a fresh review and approval. Reload to see the saved decision and history.
-
-The browser performs planning and availability changes via the real official SDK MCP client over HTTP. Eight tools are exposed; 22 domain/MCP tests and browser replan/recovery flows cover the current behavior. An expired review can be renewed with a new proposal and secret; previous consent cannot carry forward. If nobody can be home, the app explains the calendar problem instead of asking for more budget. Restoring a host requires a separate new plan and approval. Demo roles remain fictional and unauthenticated. No contractor is contacted. See docs/PRODUCT-REVIEW-20261021.md and video/v2/video-verification.json for current evidence.
+## Final review boundary
+Registration eligibility, rule acceptance and prior Amazon development experience require the participant's truthful answers. The final event submission action remains unperformed until the user approves the completed form.

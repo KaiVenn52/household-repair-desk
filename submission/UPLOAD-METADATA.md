@@ -1,37 +1,42 @@
-# Video upload metadata
+# Final upload metadata — current v3 recording
 
-## Title
+Title: Household Repair Desk | Plans change. Your approval should, too.
 
-Household Repair Desk | Plans change. Your approval should, too.
+File: C:/Users/Dell2u/OneDrive/Documents/X创作/amazon-alexa-household/video/v3/household-repair-desk-demo.mp4
+Length: 91.0 seconds; 1920 x 1080; English stock neural narration; actual recorded UI.
+SHA-256: 4b224fabf1a1081e9f493b5db007ac06d31e6c9ae662cb93dd0106d892c6f1ff
+Captions: video/v3/demo-en.srt (English, timed).
 
 ## Description
 
-A cheaper-looking quote leaves out the seal. A $140 budget cannot cover the known complete scope. Just after Sam approves Monday, his schedule changes. The old plan is withdrawn, Tuesday works for Alex, and a fresh approval is required.
+A $130 quote looks cheaper, until you notice the missing parts. Then Sam cannot be home for the repair he just approved.
 
-This is an independent Alexa+ hackathon prototype. The video shows a real local web app with a guided, deterministic Alexa+ experience simulation. It is not connected to a real Alexa device or language model. Providers, source quotes, household members and calendars are fictional. No contractor is contacted, no appointment is booked, and no payment is made.
+Household Repair Desk compares the full scope, respects a hard budget, and withdraws approval when the household calendar changes. A new plan needs fresh consent.
 
-The project also includes a working MCP server using the official SDK, MCP 2025-11-25 and Streamable HTTP. Its tools report repairs, compare sample quotes, propose a time, read tasks and cancel local tasks. Explicit household approval is handled by a separate local review screen.
+Try the working demo: https://household-repair-desk.ablepond1024.chatgpt.site
+Source and setup: https://github.com/KaiVenn52/household-repair-desk
 
-Source and run instructions: https://github.com/KaiVenn52/household-repair-desk
+Independent Alexa+ hackathon prototype. This recording shows the actual web interface and real local HTTP MCP calls using the official SDK, MCP 2025-11-25 and Streamable HTTP. The hosted demo uses the same workflow with isolated browser sessions and server storage.
 
-00:00 The cheaper quote's missing scope
-00:09 Check the source
+The Alexa+ experience is a guided, deterministic simulation. It has no live Alexa device or runtime language-model connection. Household members, quote documents, providers and calendars are fictional. No contractor is contacted, no appointment is booked, and no payment is made. Demo roles are not authenticated identities.
+
+00:00 The cheaper quote leaves out parts
+00:09 Check the source quote
 00:17 Keep the budget explicit
 00:29 Sam reviews Monday
-00:42 Sam's schedule changes
+00:42 A schedule change withdraws approval
 00:53 A new plan for Alex
 01:05 Fresh consent and persistence
-01:16 Actual MCP calls and simulation disclosure
+01:16 Actual MCP calls and disclosure
 
-Narration uses Kokoro af_heart, a stock synthetic English voice generated locally. No voice cloning, third-party music or generated product UI is used. Planning and availability changes call the real MCP service over HTTP from the browser. No runtime language model is connected.
+English narration uses Kokoro af_heart, a stock synthetic voice generated locally. No voice cloning, third-party music or AI-generated product screens.
 
-## Upload settings
+## Settings actually used
 
-- Audience: not made for children. This is a developer hackathon demonstration for adult evaluators.
-- Visibility: public when the upload succeeds, to meet the event's video requirement.
-- Altered/synthetic realistic content: no realistic person or real-world event has been synthesized; only disclosed computer narration accompanies actual screen recording.
-- Language: English.
-- Paid promotion: none.
-- File: `video/v2/household-repair-desk-demo.mp4`, approximately 91 seconds, 1920×1080. See video/v2/video-verification.json for exact duration and hash.
-
-Do not use a GitHub release video link as if it were a qualifying YouTube/Vimeo URL. Public hosting on those platforms remains a separate required field.
+- Audience: not made for children.
+- Video language: English.
+- Paid promotion: no.
+- AI use: yes, disclosed stock synthetic narration; no synthetic people or fabricated product UI.
+- Visibility: public; publication completed and cookie-free metadata verification passed.
+- Public video: https://www.youtube.com/watch?v=Eh4b-RJH8jc
+- Separate timed English captions: uploaded and saved.

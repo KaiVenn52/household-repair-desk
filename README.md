@@ -90,3 +90,11 @@ The v0.2 video uses a local Kokoro af_heart stock neural voice and a new eight-s
 Open https://household-repair-desk.ablepond1024.chatgpt.site without signing in or running a local server. The public interface is a fictional household simulation. Use sample notes only. Each browser gets its own demo session; it expires after 48 hours.
 
 Anonymous deployed-browser validation passed: full approval and replanning flow, real HTTP MCP receipts, session isolation, reload persistence, 375/768/1280 px layout and axe A/AA. See [public verification](evidence/hosted/public-report.json) and [deployment details](docs/HOSTED-DEPLOYMENT.md). The standalone hosted MCP endpoint is `/api/mcp`; `/mcp` is reserved by the hosting gateway. The local Express endpoint remains `/mcp`.
+
+## Public demo and qualifying video
+
+- Working hosted demo: https://household-repair-desk.ablepond1024.chatgpt.site
+- Public English demo video (91 seconds): https://www.youtube.com/watch?v=Eh4b-RJH8jc
+- Current final field bank: [submission/READY-TO-PASTE.md](submission/READY-TO-PASTE.md).
+
+The YouTube video shows the refined actual interface, disclosed stock synthetic narration and saved English captions. Public visibility was checked without login cookies. This is publication evidence, not proof of accepted hackathon registration or final submission.

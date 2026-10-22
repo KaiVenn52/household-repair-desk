@@ -2,17 +2,65 @@
   "project": "Household Repair Desk",
   "track": "Alexa+",
   "deadlineMYT": "2026-10-24T03:00:00+08:00",
-  "source": { "url": "https://github.com/KaiVenn52/household-repair-desk", "public": true, "license": "MIT", "runtimeCommit": "51f23b68a07d9956c483f39da0a285d17c0c3029" },
-  "ci": { "status": "success", "url": "https://github.com/KaiVenn52/household-repair-desk/actions/runs/38881877583", "domainAndMcpTestsPassed": 9, "browserWorkflowPassed": true },
-  "video": { "recorded": true, "durationSeconds": 140.8, "resolution": "1920x1080", "narration": "English synthetic speech", "captions": "English", "previewURL": "https://github.com/KaiVenn52/household-repair-desk/releases/download/v0.1.0/household-repair-desk-demo.mp4", "previewPublic": true, "sha256": "07a59159dffd13eb428377972dabe189101d3a484f81a2ee7f16db6cbc4dc97d", "qualifyingYouTubeOrVimeoURL": null },
-  "materials": { "projectDescription": "submission/PROJECT.md", "fieldBank": "submission/READY-TO-PASTE.md", "toolFeedback": "submission/FEEDBACK.md", "uploadMetadata": "submission/UPLOAD-METADATA.md" },
-  "registration": { "browserSessionVerified": true, "submitted": false, "eligibilityAttested": false, "priorAmazonExperienceAnswered": false, "knownFieldsStaged": true },
+  "checkedDateMYT": "2026-10-22",
+  "source": {
+    "url": "https://github.com/KaiVenn52/household-repair-desk",
+    "public": true,
+    "license": "MIT",
+    "verifiedSourceCommit": "0716e0da26f8e565f50f39cbf4a2414715c0a2cc"
+  },
+  "ci": {
+    "status": "success",
+    "url": "https://github.com/KaiVenn52/household-repair-desk/actions/runs/39628851293",
+    "domainAndMcpTestsPassed": 22,
+    "browserWorkflowPassed": true,
+    "hostedWorkerBrowserPassed": true
+  },
+  "hostedDemo": {
+    "url": "https://household-repair-desk.ablepond1024.chatgpt.site",
+    "deploymentStatus": "succeeded",
+    "access": "public",
+    "anonymousWorkflow": "PASS",
+    "mcpEndpoint": "https://household-repair-desk.ablepond1024.chatgpt.site/api/mcp",
+    "deployedSourceCommit": "f35c34455100f1506f8624b6283366b842d00722",
+    "evidence": "evidence/hosted/public-report.json"
+  },
+  "video": {
+    "file": "video/v3/household-repair-desk-demo.mp4",
+    "recorded": true,
+    "durationSeconds": 91.0,
+    "resolution": "1920x1080",
+    "narration": "Kokoro af_heart stock synthetic English voice; disclosed",
+    "captions": "burned English plus uploaded timed English track",
+    "sha256": "4b224fabf1a1081e9f493b5db007ac06d31e6c9ae662cb93dd0106d892c6f1ff",
+    "qualifyingYouTubeOrVimeoURL": "https://www.youtube.com/watch?v=Eh4b-RJH8jc",
+    "public": true,
+    "publicCheck": "cookie-free yt-dlp reported availability=public, duration=91",
+    "publicationEvidence": "evidence/submission/youtube-published.png"
+  },
+  "materials": {
+    "projectDescription": "submission/PROJECT.md",
+    "fieldBank": "submission/READY-TO-PASTE.md",
+    "toolFeedback": "submission/FEEDBACK.md",
+    "uploadMetadata": "submission/UPLOAD-METADATA.md"
+  },
+  "registration": {
+    "currentBrowserSessionVerified": true,
+    "accountHandle": "kangming0810",
+    "submitted": false,
+    "eligibilityAttested": false,
+    "priorAmazonExperienceAnswered": false,
+    "currentPage": "Devpost confirms registration is required before a project draft can be created; /register shows Cloudflare security verification in both supported browsers.",
+    "registered": false,
+    "currentVerifiedProjectDrafts": 0,
+    "managementPageChecked": true
+  },
   "eventDraftSaved": false,
   "finalSubmissionAuthorized": false,
   "finalSubmissionPerformed": false,
   "blockers": [
-    "Participant must confirm official eligibility/rules and answer prior Amazon development experience; no answers have been fabricated.",
-    "Connected browser refused native YouTube file attachment with Not allowed. A successful authorized upload or participant file selection is required. GitHub release preview is not a qualifying substitute.",
-    "Final event submission requires the user's explicit confirmation after the actual form is ready."
+    "Event registration security verification must complete before the actual form can be inspected.",
+    "Participant must supply truthful eligibility/rule consent and prior Amazon development experience.",
+    "Final event submission remains gated on user approval of the completed form."
   ]
 }
