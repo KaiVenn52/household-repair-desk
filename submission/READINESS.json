@@ -45,15 +45,18 @@
     "uploadMetadata": "submission/UPLOAD-METADATA.md"
   },
   "registration": {
-    "currentBrowserSessionVerified": true,
+    "currentBrowserSessionVerified": false,
     "accountHandle": "kangming0810",
     "submitted": false,
     "eligibilityAttested": false,
     "priorAmazonExperienceAnswered": false,
     "currentPage": "Devpost confirms registration is required before a project draft can be created; /register shows Cloudflare security verification in both supported browsers.",
-    "registered": false,
+    "registered": null,
     "currentVerifiedProjectDrafts": 0,
-    "managementPageChecked": true
+    "managementPageChecked": true,
+    "lastObservedAccountVerified": true,
+    "automationConnection": "Chrome absent from connected-browser inventory; in-app page attachment timed out during the current continuation.",
+    "lastObservedRegistered": false
   },
   "eventDraftSaved": false,
   "finalSubmissionAuthorized": false,

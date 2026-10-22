@@ -6,7 +6,8 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const files = [];
 function walk(dir) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    if (['node_modules', 'data', 'delivery', '.git', '.local-browser', '.voice-env', 'models', 'v1', 'raw', 'render-frames', 'audio'].includes(entry.name)) continue;
+    if (['node_modules', 'data', 'delivery', 'dist', 'outputs', '.git', '.local-browser', '.voice-env', 'models', 'v1', 'raw', 'render-frames', 'audio'].includes(entry.name)) continue;
+    if (entry.isSymbolicLink() || entry.name === '.env' || entry.name.startsWith('.env.')) continue;
     if (/\.(mp4|webm|wav|mp3)$/i.test(entry.name) || entry.name === 'recording.json') continue;
     const path = join(dir, entry.name);
     if (entry.isDirectory()) walk(path);
