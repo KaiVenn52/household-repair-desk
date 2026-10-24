@@ -6,7 +6,7 @@ The local Express app remains unchanged and loopback-only. The hosted build uses
 - Browser planning and availability routes invoke the hosted /api/mcp endpoint over real HTTP through the official SDK, using only that visitor's demo cookie. Sites reserves /mcp at its gateway, so the standalone 2025-11-25 endpoint uses /api/mcp; it is not a Sites plugin registration.
 - The MCP interface supports protocol 2025-11-25. It has no booking, payment or approval tool. Explicit UI approval remains required.
 - D1 writes use compare-and-swap revisions, rejecting concurrent changes. 12 repairs, 150 KB state, 50 recent tool receipts and 16 KB request bodies bound a demo session.
-- Cross-origin and cross-site requests are rejected. Public task JSON omits confirmation secrets.
+- Public HTML and bundled assets accept read-only GET/HEAD entry from external links. Session/API and MCP routes reject cross-origin and cross-site requests. Public task JSON omits confirmation secrets.
 - Embedded assets preserve the refined UI. Hosted copy states that sample notes are stored on the server and this browser session expires after 48 hours. The UI asks visitors to use sample details only.
 - The build carries schema-only D1 migration 0000_repair_sessions; request handlers do not create or alter tables.
 

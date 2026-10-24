@@ -1,0 +1,322 @@
+- paragraph:
+  - text: "Project submitted! Continue to edit your project until the hackathon deadline: October 23, 2026 at 03:00pm EDT."
+  - link "×":
+    - /url: "#"
+- banner:
+  - navigation:
+    - list:
+      - link "":
+        - /url: "#"
+        - generic: 
+      - link "Devpost":
+        - /url: https://devpost.com
+        - img "Devpost"
+      - text:  
+      - link "Access your account menu":
+        - /url: https://devpost.com/kangming0810?ref_content=user-portfolio&ref_feature=portfolio&ref_medium=global-nav
+        - img "kangming0810"
+      - generic: 
+    - list:
+      - link "Portfolio":
+        - /url: https://devpost.com/kangming0810?ref_content=user-portfolio&ref_feature=portfolio&ref_medium=global-nav
+      - link "Settings":
+        - /url: https://devpost.com/settings
+      - link "Help":
+        - /url: https://help.devpost.com
+      - link "Log out":
+        - /url: /users/logout
+    - list:
+      - link "Join a hackathon":
+        - /url: "#join-a-hackathon"
+        - generic: Join a hackathon
+        - generic: 
+        - text: 
+      - text:   
+      - link "Host a hackathon":
+        - /url: "#host-a-hackathon"
+        - text: Host a hackathon
+        - generic: 
+        - text: 
+      - text:      
+      - link "Resources":
+        - /url: "#resources"
+        - text: Resources
+        - generic: 
+        - text: 
+  - text:                   🔔
+- banner:
+  - heading "Notifications" [level=6]
+- paragraph: Loading...
+- contentinfo
+- heading "Household Repair Desk" [level=1]
+- paragraph: Compare the full repair cost, find someone to be home, and withdraw old approval when plans change. Every new plan needs fresh household consent.
+- link "♥ Like":
+  - /url: /software/household-repair-desk/likes
+  - generic: ♥
+  - text: Like
+- link "“ Comment":
+  - /url: /software/household-repair-desk#updates
+  - generic: “
+  - text: Comment
+- navigation:
+  - list:
+    - heading "Story" [level=4]:
+      - link "Story":
+        - /url: /software/household-repair-desk
+    - heading "Updates" [level=4]:
+      - link "Updates":
+        - /url: /software/household-repair-desk#updates
+    - heading "Submission history" [level=4]:
+      - link "Submission history":
+        - /url: /software/household-repair-desk#submission-history
+- article:
+  - list:
+    - button:
+      - generic: 
+    - link:
+      - /url: https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/005/645/881/datas/original.png
+    - generic: 
+    - paragraph: A household-approved repair plan. Fictional provider and calendar; no contractor contacted or booking made.
+    - tabpanel:
+      - iframe [id="99105559"]:
+        - generic "YouTube Video Player"
+        - button "Play video":
+        - button "AI":
+          - generic: AI
+        - button "Hide player controls"
+        - link "Household Repair Desk | Plans change. Your approval should, too.":
+          - /url: https://www.youtube.com/watch?v=Eh4b-RJH8jc
+        - link "Kang Ming Wong":
+          - /url: /channel/UCbNzg3qSD3bucshAXPAOKgg
+          - generic: Kang Ming Wong
+        - button "thumbnail-image":
+          - img "thumbnail-image"
+        - generic: Kang Ming Wong
+        - generic: No subscribers
+        - button "Share":
+        - button "Watch later":
+        - link "Watch on YouTube":
+          - /url: https://www.youtube.com/watch?v=Eh4b-RJH8jc
+          - text: Watch on
+    - tabpanel:
+      - link:
+        - /url: https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/005/645/881/datas/original.png
+      - generic: 
+      - paragraph: A household-approved repair plan. Fictional provider and calendar; no contractor contacted or booking made.
+    - iframe [id="494543350"]:
+      - generic "YouTube Video Player"
+      - button "Play video"
+      - button "AI":
+        - generic: AI
+      - button "Hide player controls"
+      - link "Household Repair Desk | Plans change. Your approval should, too.":
+        - /url: https://www.youtube.com/watch?v=Eh4b-RJH8jc
+      - link "Kang Ming Wong":
+        - /url: /channel/UCbNzg3qSD3bucshAXPAOKgg
+        - generic: Kang Ming Wong
+      - button
+      - generic: Kang Ming Wong
+      - generic: No subscribers
+      - button "Share":
+      - button "Watch later":
+      - link "Watch on YouTube":
+        - /url: https://www.youtube.com/watch?v=Eh4b-RJH8jc
+        - text: Watch on
+    - link:
+      - /url: https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/005/645/881/datas/original.png
+    - generic: 
+    - paragraph: A household-approved repair plan. Fictional provider and calendar; no contractor contacted or booking made.
+    - button:
+      - generic: 
+    - tablist:
+      - tab "1 of 2" [selected]: • 1
+      - tab "2 of 2": • 2
+  - heading "Inspiration" [level=2]
+  - paragraph: "A repair can fall apart after everyone agrees to it. One person has the quote, another has the calendar, and the cheapest number may leave out parts. We focused on the moment after a plan is made: if nobody can be home anymore, that plan should lose its approval immediately."
+  - heading "What it does" [level=2]
+  - paragraph: Household Repair Desk follows a fictional leaking kitchen sink from report to a recorded household decision. It compares a $130 subtotal with unknown parts against a $145 quote that includes the standard seal, keeps the budget explicit, and chooses the earliest future time that works for the provider and someone at home.
+  - paragraph: After Sam approves Monday, changing his availability withdraws the old plan and its approval. The planner can propose Tuesday with Alex, but Alex must review and approve that new proposal. An expired review can be renewed without reviving old consent. If both hosts are away, the app explains the calendar blocker instead of asking for a larger budget.
+  - paragraph: The public demo needs no login or installation. Each browser receives an isolated demo household stored on the server; sessions expire after 48 hours. All identities, quote documents, providers and calendars are fictional. No contractor is contacted, no appointment is booked, and no payment is made.
+  - heading "How we built it" [level=2]
+  - paragraph: The same RepairDesk domain rules power the local Express application and a hosted Web Standards Worker. The official MCP SDK exposes eight tools using MCP 2025-11-25 and Streamable HTTP. Browser planning and availability changes invoke the actual HTTP MCP endpoint, not a label-only mock. The hosted endpoint is /api/mcp because the hosting gateway reserves /mcp; the local endpoint remains /mcp.
+  - paragraph: Approval is a separate browser review operation requiring the exact current proposal, its version, an expiring confirmation secret and explicit consent. Tools cannot approve a plan. Public task responses omit confirmation secrets. Hosted storage uses D1 and revision checks to reject conflicting writes. A random HttpOnly browser cookie isolates visitors; it is a demo session, not real household identity verification.
+  - paragraph: The Alexa+ experience is a clearly labeled deterministic simulation. There is no live Alexa device, production Amazon API or runtime language model connection.
+  - heading "Challenges" [level=2]
+  - paragraph: We had to distinguish an unknown final price from a lower subtotal, and a calendar problem from an insufficient budget. We also had to invalidate both pending and completed approvals after schedule changes, without erasing the decision history. Fixed example dates would expire before judging, so new tasks generate future sample slots while old tasks keep their original calendar snapshot.
+  - paragraph: Public deployment exposed a reserved MCP path and a CSP incompatibility with the hosting edge. We moved the standalone hosted endpoint to /api/mcp, added a per-response script nonce, and repeated the full anonymous browser workflow against the deployed site.
+  - heading "Accomplishments" [level=2]
+  - paragraph: A complete public, working demo with explicit household approval, recoverable failures and actual MCP transport calls. All 22 domain/MCP tests pass. Browser verification covers budgets, unavailable slots, approval, cancellation, changed availability, expired reviews, restored hosts, saved selection and stale dates. A separate anonymous public test verifies the deployed workflow, two-session isolation, persistence, accessibility and 375/768/1280 pixel layouts. Linux CI also passes.
+  - heading "What we learned" [level=2]
+  - paragraph: An assistant should not treat a plan as authority to act. The useful work is keeping the scope, schedule and approval tied to the same current proposal, and being precise about what changed when that proposal stops working.
+  - heading "What is next" [level=2]
+  - paragraph: Authenticated household roles, live quotes, real calendar integration and an assistant model client. Each would retain the same explicit approval boundary; real external bookings or payments would require an additional reviewed action. No user study or measured financial savings are claimed.
+  - heading "Testing instructions" [level=2]
+  - paragraph: "Open the public demo. Report: The kitchen sink is leaking under the cabinet. Set the budget to 140 and select Find a plan: the complete scope cannot fit. Explicitly change the cap to 150, find the plan, review and approve as Sam. Select Sam can't cover Monday, then Find another time. Review the new Tuesday plan as Alex and approve afresh. Reload and inspect Decision history. Use fictional details only."
+  - heading "Built With" [level=2]
+  - list:
+    - link "javascript":
+      - /url: https://devpost.com/software/built-with/javascript
+  - navigation:
+    - heading "Try it out" [level=2]
+    - list:
+      - link "🔗 household-repair-desk.ablepond1024.chatgpt.site":
+        - /url: https://household-repair-desk.ablepond1024.chatgpt.site
+        - generic: 🔗
+        - text: household-repair-desk.ablepond1024.chatgpt.site
+      - link " GitHub Repo":
+        - /url: https://github.com/KaiVenn52/household-repair-desk
+        - generic: 
+        - text: GitHub Repo
+  - complementary:
+    - heading "Submitted to" [level=4]
+    - list:
+      - figure:
+        - link "image":
+          - /url: https://amazonappdev2026.devpost.com/
+          - img "image"
+      - paragraph:
+        - 'link "Build, Ship, Shape: Amazon Developer Hackathon"':
+          - /url: https://amazonappdev2026.devpost.com/
+      - generic: ⏲
+      - strong:
+        - time: 12 more hours
+      - text: to submit
+      - link "Edit hackathon submission":
+        - /url: https://devpost.com/submit-to/30992-build-ship-shape-amazon-developer-hackathon/manage/submissions/1254662-household-repair-desk/edit
+    - heading "Created by" [level=4]
+    - list:
+      - generic: Describe your contribution
+      - textbox "Describe your contribution":
+        - /placeholder: "Ex: I worked on the back-end. It was my first time using Node, which was a little intimidating, but I learned a lot."
+      - button "Save"
+      - link "Cancel":
+        - /url: /software/household-repair-desk
+      - figure:
+        - link "Kang Ming Wong":
+          - /url: https://devpost.com/kangming0810
+          - img "Kang Ming Wong"
+      - link "Kang Ming Wong":
+        - /url: https://devpost.com/kangming0810
+    - paragraph:
+      - link "+ add team members":
+        - /url: /software/household-repair-desk/edit#members
+    - link "⚑ Report inappropriate content":
+      - /url: /software/household-repair-desk/flags/new
+      - generic: ⚑
+      - text: Report inappropriate content
+    - link "👀 Hide project from my portfolio":
+      - /url: https://devpost.com/software/household-repair-desk/members/6149534/toggle_visibility
+      - generic: 👀
+      - text: Hide project from my portfolio
+- link "♥ Like":
+  - /url: /software/household-repair-desk/likes
+  - generic: ♥
+  - text: Like
+- list
+- article:
+  - heading "Updates" [level=2]
+  - link:
+    - /url: https://devpost.com/kangming0810
+  - generic: Post an update about Household Repair Desk
+  - paragraph: Keep a log of how Household Repair Desk has evolved. Post about new features, app store releases, screenshots, or even code snippets. Your followers will see your updates in their feeds and can comment on them.
+  - textbox "Post an update about Household Repair Desk":
+    - /placeholder: Use markdown for formatting.
+  - button "Post update"
+  - article:
+    - link "▾":
+      - /url: "#"
+      - generic: ▾
+    - list:
+      - link:
+        - /url: "#"
+        - generic: ✉
+        - text: Turn off notifications
+    - link "Kang Ming Wong":
+      - /url: https://devpost.com/kangming0810
+      - img "Kang Ming Wong"
+    - paragraph:
+      - link "Kang Ming Wong":
+        - /url: https://devpost.com/kangming0810
+      - text: started this project
+      - text: —
+      - link "less than a minute ago":
+        - /url: /software/household-repair-desk/updates/855712
+        - time: less than a minute ago
+    - paragraph: Leave feedback in the comments!
+    - list
+    - link "Kang Ming Wong":
+      - /url: https://devpost.com/kangming0810
+      - img "Kang Ming Wong"
+    - textbox "Comments":
+      - /placeholder: Write a comment
+    - button "Post comment"
+- article:
+  - heading "Submission history" [level=2]
+  - status "Loading submission history":
+    - generic: 
+- contentinfo:
+  - navigation:
+    - heading "Devpost" [level=4]
+    - list:
+      - link "About":
+        - /url: https://info.devpost.com/about
+      - link "Careers":
+        - /url: https://info.devpost.com/careers
+      - link "Contact":
+        - /url: https://info.devpost.com/contact
+      - link "Help":
+        - /url: https://help.devpost.com/
+  - navigation:
+    - heading "Hackathons" [level=4]
+    - list:
+      - link "Browse hackathons":
+        - /url: https://devpost.com/hackathons
+      - link "Explore projects":
+        - /url: https://devpost.com/software
+      - link "Host a hackathon":
+        - /url: https://info.devpost.com
+      - link "Hackathon guides":
+        - /url: https://info.devpost.com/guides
+  - navigation:
+    - heading "Portfolio" [level=4]
+    - list:
+      - link "Your projects":
+        - /url: https://devpost.com/portfolio/redirect?page=projects
+      - link "Your hackathons":
+        - /url: https://devpost.com/portfolio/redirect?page=hackathons
+      - link "Settings":
+        - /url: https://devpost.com/settings
+  - navigation:
+    - heading "Connect" [level=4]
+    - list:
+      - link "Twitter":
+        - /url: https://twitter.com/devpost
+        - generic: 
+        - text: Twitter
+      - link "Discord":
+        - /url: https://discord.com/invite/HP4BhW3hnp
+        - generic: 
+        - text: Discord
+      - link "Facebook":
+        - /url: https://www.facebook.com/devposthacks
+        - generic: 
+        - text: Facebook
+      - link "LinkedIn":
+        - /url: https://www.linkedin.com/company/devpost/
+        - generic: 
+        - text: LinkedIn
+  - navigation:
+    - generic: © 2026 Devpost, Inc. All rights reserved.
+    - list:
+      - link "Community guidelines":
+        - /url: https://info.devpost.com/legal/community-guidelines
+      - link "Security":
+        - /url: https://info.devpost.com/legal/security
+      - link "CA notice":
+        - /url: https://info.devpost.com/legal/california-consumer-privacy-act
+      - link "Privacy policy":
+        - /url: https://info.devpost.com/legal/privacy-policy
+      - link "Terms of service":
+        - /url: https://info.devpost.com/legal/terms-of-service
+- iframe:
+  - button:

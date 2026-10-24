@@ -1,6 +1,6 @@
-# Pre-submission review — 22 October 2026
+# Pre-submission review — 23 October 2026
 
-This is the completed content packet, not a saved Devpost submission form.
+Historical pre-submission review, completed with final submission on 23 October 2026 after explicit participant approval of the entry and final terms. Submission ID: 1254662. Success evidence: evidence/submission/devpost-submitted-20261023.png and its companion text snapshot.
 
 | Field | Final value / evidence |
 |---|---|
@@ -17,7 +17,7 @@ This is the completed content packet, not a saved Devpost submission form.
 | Description | submission/READY-TO-PASTE.md and PROJECT.md |
 | Feedback | submission/FEEDBACK.md |
 | Observed friction | submission/FRICTION-LOG.md |
-| Latest verified source CI | https://github.com/KaiVenn52/household-repair-desk/actions/runs/39724087826 |
+| Latest verified source CI | https://github.com/KaiVenn52/household-repair-desk/actions/runs/39759081405 |
 | Public workflow evidence | evidence/hosted/public-report.json |
 | Public video evidence | evidence/submission/youtube-public-check.json and youtube-published.png |
 
@@ -31,8 +31,8 @@ A deterministic Alexa+ experience simulation with a real MCP service. Household 
 
 ## Actual form status and participant-only facts
 
-The last readable Devpost account was kangming0810. Its project-management page required event registration before creating a submission draft. Registration then stopped at Cloudflare security verification. No successful event registration, saved event draft or final submission receipt exists in the evidence. Current browser access must be restored before the online fields can be inspected.
+Devpost account kangming0810 registered successfully after participant confirmation. The actual draft Household Repair Desk (1254662) now contains the overview, complete project details, public video and code/demo links, gallery screenshot, thumbnail and additional questionnaire. Preview and finalization were inspected. Finalization displays Draft, 4/5 steps done, an unchecked terms checkbox and Submit project.
 
-Participant facts that must not be guessed: eligibility, acceptance of the official event rules, and prior Amazon development experience. Complete any actual field-length, image, track, feedback and video requirements visible on the real form after registration. Stop before its final submission action until the user approves that completed review state.
+Participant confirmed eligibility and rules at registration, no Amazon developer account, no promotion-entity employment/representation, Significant learning and Yes for career AI value. Those answers were used. Final submission and final terms were subsequently explicitly approved and executed. The project page now displays Project submitted! and SUBMITTED TO the Amazon hackathon. See DEVPOST-LIVE-STATUS-20261023.md for the completed status.
 
 Official deadline last verified: October 24, 2026 at 03:00 Asia/Kuala_Lumpur. Source: https://amazonappdev2026.devpost.com/rules

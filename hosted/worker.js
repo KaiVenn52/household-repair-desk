@@ -38,9 +38,8 @@ function attach(response,s){
 }
 async function route(request,env){
  const url=new URL(request.url),path=url.pathname;
- if(request.headers.get('origin') && request.headers.get('origin')!==url.origin)return json({error:'Origin not allowed.'},403);
- if(['cross-site'].includes(request.headers.get('sec-fetch-site')))return json({error:'Cross-site access is not allowed.'},403);
- if(path==='/api/health')return json({ok:true,mode:'hosted-fixture-simulation',mcp:'2025-11-25',storage:'D1 per-browser session, 48-hour expiry',externalBooking:false,modelConnected:false});
+ // Public documents and bundled assets must be reachable from external links.
+ // Serve only read-only static requests before the session/API origin checks.
  if(['GET','HEAD'].includes(request.method) && (path==='/'||assets[path]!==undefined)){
   const key=path==='/'?'/index.html':path;
   const headers={'Content-Type':key.endsWith('.html')?'text/html; charset=utf-8':key.endsWith('.css')?'text/css; charset=utf-8':key.endsWith('.js')?'text/javascript; charset=utf-8':'text/plain; charset=utf-8'};
@@ -48,6 +47,9 @@ async function route(request,env){
   if(key.endsWith('.html')){const nonce=crypto.randomUUID();headers['Content-Security-Policy']=security['Content-Security-Policy'].replace("script-src 'self'",`script-src 'self' 'nonce-${nonce}'`);content=content.replace('<script type="module"',`<script nonce="${nonce}" type="module"`);}
   return new Response(request.method==='HEAD'?null:content,{headers});
  }
+ if(request.headers.get('origin') && request.headers.get('origin')!==url.origin)return json({error:'Origin not allowed.'},403);
+ if(['cross-site'].includes(request.headers.get('sec-fetch-site')))return json({error:'Cross-site access is not allowed.'},403);
+ if(path==='/api/health')return json({ok:true,mode:'hosted-fixture-simulation',mcp:'2025-11-25',storage:'D1 per-browser session, 48-hour expiry',externalBooking:false,modelConnected:false});
  if(!path.startsWith('/api/')&&path!=='/mcp')return json({error:'Not found.'},404);
  const s=await session(request,env);const desk=new RepairDesk(null);desk.tasks=s.tasks;
  let response;

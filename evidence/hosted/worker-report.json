@@ -1,8 +1,9 @@
 {
   "status": "PASS",
-  "url": "http://127.0.0.1:52166",
+  "url": "http://127.0.0.1:53953",
   "scope": "Bundled production Worker on Node Web Standards preview, real SQLite-backed D1 adapter; not yet a public deployment",
   "checks": [
+    "External links can GET/HEAD public pages/assets; cross-site session reads, writes and MCP remain blocked",
     "Hosted Worker: report → hard budget rejection → real HTTP MCP plan → explicit approval",
     "Actual HTTP MCP availability change → old approval withdrawn → replan → fresh Alex approval → D1 adapter reload",
     "Two independent browser sessions cannot read or mutate each other; public tasks omit approval secret",
@@ -16,28 +17,28 @@
       "protocol": "2025-11-25",
       "transport": "Streamable HTTP",
       "outcome": "completed",
-      "at": "2026-10-21T15:43:49.458Z"
+      "at": "2026-10-24T07:55:58.251Z"
     },
     {
       "tool": "plan_repair",
       "protocol": "2025-11-25",
       "transport": "Streamable HTTP",
       "outcome": "completed",
-      "at": "2026-10-21T15:43:49.590Z"
+      "at": "2026-10-24T07:55:58.516Z"
     },
     {
       "tool": "update_household_availability",
       "protocol": "2025-11-25",
       "transport": "Streamable HTTP",
       "outcome": "completed",
-      "at": "2026-10-21T15:43:49.944Z"
+      "at": "2026-10-24T07:55:59.101Z"
     },
     {
       "tool": "plan_repair",
       "protocol": "2025-11-25",
       "transport": "Streamable HTTP",
       "outcome": "completed",
-      "at": "2026-10-21T15:43:50.043Z"
+      "at": "2026-10-24T07:55:59.353Z"
     }
   ]
 }

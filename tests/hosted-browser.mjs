@@ -10,6 +10,15 @@ const browser=await chromium.launch({headless:true,...(existsSync('C:/Program Fi
 const errors=[],checks=[];mkdirSync('evidence/hosted',{recursive:true});
 try{
  const context=await browser.newContext({viewport:{width:1280,height:900}}),page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&!/Failed to load resource: the server responded with a status of (400|409)/.test(m.text()))errors.push(m.text());});
+ const externalEntry={Origin:'https://devpost.com','Sec-Fetch-Site':'cross-site','Sec-Fetch-Mode':'navigate','Sec-Fetch-Dest':'document'};
+ const entry=await page.request.get(base+'/',{headers:externalEntry});assert.equal(entry.status(),200);assert.ok((await entry.text()).includes('Repairs, kept in order.'));
+ for(const asset of ['/app.js','/style.css'])assert.equal((await page.request.get(base+asset,{headers:externalEntry})).status(),200);
+ assert.equal((await page.request.head(base+'/',{headers:externalEntry})).status(),200);
+ for(const endpoint of ['/api/desk','/api/review/example','/api/mcp-activity'])assert.equal((await page.request.get(base+endpoint,{headers:externalEntry})).status(),403);
+ assert.equal((await page.request.post(base+'/api/report',{headers:{'Sec-Fetch-Site':'cross-site'},data:{description:'The kitchen sink is leaking.'}})).status(),403);
+ assert.equal((await page.request.post(base+'/api/mcp',{headers:externalEntry,data:{jsonrpc:'2.0',method:'initialize',id:1}})).status(),403);
+ assert.equal((await page.request.post(base+'/',{headers:externalEntry,data:{}})).status(),403);
+ checks.push('External links can GET/HEAD public pages/assets; cross-site session reads, writes and MCP remain blocked');
  await page.goto(base);await page.getByLabel('What needs fixing?').fill('The kitchen sink is leaking under the cabinet.');await page.getByRole('button',{name:'Report repair'}).click();await page.getByRole('button',{name:'Find a plan'}).waitFor();
  const cookies=await context.cookies();assert.ok(cookies.some(c=>c.name==='__Host-repair-demo'&&c.httpOnly&&c.secure&&c.sameSite==='Strict'));
  await page.getByLabel('Keep the known total under').fill('140');await page.getByRole('button',{name:'Find a plan'}).click();await page.getByText('No complete quote fits that cap.',{exact:false}).waitFor();
